@@ -12,6 +12,13 @@ LeafletMeasureAsset::register($this);
 LeafletLocateAsset::register($this);
 ?>
 
+<style>
+    .legend.leaflet-control{
+        max-height: 180px !important;
+        overflow-y: scroll;
+    }
+</style>
+
 <!-- Tải plugin Leaflet-LocateControl -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol@0.79.0/dist/L.Control.Locate.min.css" />
 <script src="https://unpkg.com/leaflet.locatecontrol@0.79.0/dist/L.Control.Locate.min.js"></script>
