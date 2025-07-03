@@ -163,7 +163,7 @@ map.addLayer(googleMap, true);
 var x = 10.7840441;
 var y = 106.6939804;
 
-const locateControl = L.control.locate({
+L.control.locate({
     position: 'topleft',
     flyTo: true,
     keepCurrentZoomLevel: true,
@@ -178,14 +178,12 @@ const locateControl = L.control.locate({
         maxZoom: 18
     },
     clickBehavior: {
-        inView: 'stop',
-        outOfView: 'setView',
+        inView: 'stop', 
+        outOfView: 'setView', 
         inViewNotFollowing: 'setView'
-    },
-    watch: false
+    }
 }).addTo(map);
 
-// Khởi động tự động định vị ban đầu + hỗ trợ touch
 setTimeout(() => {
     const btn = document.querySelector('.leaflet-control-locate a');
     if (btn) {
@@ -194,36 +192,7 @@ setTimeout(() => {
             btn.click(); // kích hoạt click bằng touch
         });
     }
-
-    locateControl.start(); // định vị ban đầu
 }, 1000);
-
-// Biến để kiểm soát chu kỳ cập nhật
-let locateInterval = null;
-
-// Lặp định vị lại sau mỗi 10 giây nếu đang bật
-map.on("locationfound", function (e) {
-    $('#geoy-input').val(e.latitude);
-    $('#geox-input').val(e.longitude);
-
-    map.setView([e.latitude, e.longitude], 18);
-    marker.setLatLng([e.latitude, e.longitude]);
-
-    // Xóa chu kỳ cũ nếu có
-    if (locateInterval) clearTimeout(locateInterval);
-
-    // Kiểm tra nếu Locate Control đang bật (theo dõi)
-    if (locateControl._active) {
-        locateInterval = setTimeout(() => {
-            locateControl.start(); // Gọi lại sau 10 giây
-        }, 10000);
-    }
-});
-
-// Dừng tự động nếu người dùng tắt định vị
-map.on('locationerror', function () {
-    if (locateInterval) clearTimeout(locateInterval);
-});
 
 marker.on('dragend', function(event) {
     var marker = event.target;
@@ -239,5 +208,15 @@ map.addLayer(marker);
 
 
 
+map.on("locationfound", function(e) {
+    $('#geoy-input').val(e.latitude);
+    $('#geox-input').val(e.longitude);
+
+    // Di chuyển marker nếu cần
+    map.setView([e.latitude,  e.longitude], 18);
+    marker.setLatLng([e.latitude, e.longitude]);
+
+    
+});
 
 </script>
