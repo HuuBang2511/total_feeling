@@ -13,12 +13,19 @@ LeafletLocateAsset::register($this);
 ?>
 
 <style>
+
+    .legend.leaflet-control{
+        max-height: 400px !important;
+        overflow-y: scroll;
+    }
+
     @media only screen and (max-width: 600px) {
         .legend.leaflet-control{
             max-height: 180px !important;
             overflow-y: scroll;
         }
     }
+    
     
 </style>
 
