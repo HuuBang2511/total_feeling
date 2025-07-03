@@ -175,7 +175,8 @@ L.control.locate({
     icon: 'fa fa-location-arrow', // nếu bạn dùng font-awesome
     locateOptions: {
         enableHighAccuracy: true,
-        maxZoom: 18
+        maxZoom: 18,
+        watch: false 
     },
     clickBehavior: {
         inView: 'stop', 
@@ -209,13 +210,25 @@ map.addLayer(marker);
 
 
 map.on("locationfound", function(e) {
-    $('#geoy-input').val(e.latitude);
-    $('#geox-input').val(e.longitude);
+    // $('#geoy-input').val(e.latitude);
+    // $('#geox-input').val(e.longitude);
 
-    // Di chuyển marker nếu cần
-    map.setView([e.latitude,  e.longitude], 18);
-    marker.setLatLng([e.latitude, e.longitude]);
+    // // Di chuyển marker nếu cần
+    // map.setView([e.latitude,  e.longitude], 18);
+    // marker.setLatLng([e.latitude, e.longitude]);
 
+    const current = L.latLng(e.latitude, e.longitude);
+
+    // Nếu chưa có hoặc sai số trên 5 mét
+    if (!lastLatLng || current.distanceTo(lastLatLng) > 5) {
+        lastLatLng = current;
+
+        $('#geoy-input').val(e.latitude);
+        $('#geox-input').val(e.longitude);
+
+        marker.setLatLng(current);
+        map.setView(current, 18);
+    }
     
 });
 
