@@ -221,7 +221,7 @@ var map = L.map('map').setView([
     <?= ($model->long != null) ? $model->long : 106.63085460662843 ?>
 ], 18);
 
-// Khởi tạo marker mặc định
+// Marker và icon
 var icon = L.icon({
     iconUrl: 'https://auth.hcmgis.vn/uploads/icon/icons8-map-marker-96.png',
     iconSize: [40, 40],
@@ -237,7 +237,7 @@ var marker = L.marker([
     icon: icon
 }).addTo(map);
 
-// Các lớp nền
+// Layers
 var googleMap = L.tileLayer('http://{s}.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
     maxZoom: 24,
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
@@ -268,12 +268,13 @@ map.addLayer(googleMap);
 // Theo dõi vị trí liên tục
 let lastLatLng = null;
 let watchId = null;
+let locateButtonEl = null; // nút định vị
 
-// Nút định vị tùy chỉnh
+// Tạo nút định vị
 const locateBtn = L.control({ position: 'topleft' });
 locateBtn.onAdd = function(map) {
     const btn = L.DomUtil.create('button', 'leaflet-bar');
-    btn.type = 'button'; // Ngăn submit form
+    btn.type = 'button';
     btn.innerHTML = '<i class="fa fa-location-arrow"></i>';
     btn.title = 'Theo dõi vị trí';
     btn.style.width = '34px';
@@ -281,17 +282,23 @@ locateBtn.onAdd = function(map) {
     btn.style.background = 'white';
     btn.style.border = 'none';
     btn.style.cursor = 'pointer';
+
     btn.onclick = function(e) {
         e.preventDefault();
         startTracking();
+
+        // Ẩn nút sau khi bật định vị
+        btn.style.display = 'none';
     };
+
+    locateButtonEl = btn; // lưu tham chiếu
     return btn;
 };
 locateBtn.addTo(map);
 
 // Bắt đầu theo dõi GPS
 function startTracking() {
-    if (watchId !== null) return; // tránh trùng
+    if (watchId !== null) return;
 
     watchId = navigator.geolocation.watchPosition(
         function(pos) {
@@ -319,17 +326,22 @@ function startTracking() {
     );
 }
 
-// Dừng GPS khi kéo marker thủ công
+// Khi kéo marker → dừng GPS + hiện lại nút
 marker.on('dragend', function(event) {
     const position = event.target.getLatLng();
     map.panTo(position);
     $('#geoy-input').val(position.lat);
     $('#geox-input').val(position.lng);
 
-    // Dừng cập nhật GPS
+    // Dừng GPS
     if (watchId !== null) {
         navigator.geolocation.clearWatch(watchId);
         watchId = null;
+    }
+
+    // Hiện lại nút định vị
+    if (locateButtonEl) {
+        locateButtonEl.style.display = 'block';
     }
 });
 
