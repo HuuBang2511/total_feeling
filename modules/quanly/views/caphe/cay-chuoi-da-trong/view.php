@@ -43,6 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </style>
 
 
+
 <div class="row">
     <div class="col-lg-12">
         <div class="block block-themed">
@@ -67,7 +68,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'model' => $model,
                                 'attributes' => [
                                     'macay',
-                                    
                                     'thongtincay',
                                 ],
                             ]) ?>
@@ -119,8 +119,8 @@ $this->params['breadcrumbs'][] = $this->title;
         "Vệ tinh": layerGMapSatellite,
     };
 
-    var caygaovang =  L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
-        layers: 'total_feeling:4326_cay_gaovang',
+    var caychuoi =  L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
+        layers: '	total_feeling:4326_cay_chuoi',
         format: 'image/png',
         transparent: true,
         maxZoom: 22 // Đặt maxZoom là 22
@@ -136,7 +136,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     var overLayers = {
         'Nền bay chụp': nen,
-        'Cây gáo vàng': caygaovang,
+        'Cây chuối': caychuoi,
     };
 
     L.control.layers(baseLayers, overLayers).addTo(map);

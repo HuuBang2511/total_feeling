@@ -120,14 +120,14 @@ $this->params['breadcrumbs'][] = $this->title;
         "Vệ tinh": layerGMapSatellite,
     };
 
-    var caysua =  L.tileLayer.wms('https://geotrace.online/geoserver/total_feeling/wms', {
+    var caysua =  L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
         layers: 'total_feeling:4326_cay_sen_khac',
         format: 'image/png',
         transparent: true,
         maxZoom: 22 // Đặt maxZoom là 22
     });
 
-    var nen = L.tileLayer.wms('https://geotrace.online/geoserver/total_feeling/wms', {
+    var nen = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
         layers: 'total_feeling:orthor_4326_chenhvenh',
         format: 'image/png',
         transparent: true,

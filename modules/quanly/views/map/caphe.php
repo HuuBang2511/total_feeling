@@ -85,7 +85,7 @@ LeafletLocateAsset::register($this);
 
                     
 
-                    var wmsNenbaychupLayer = L.tileLayer.wms('https://geotrace.online/geoserver/total_feeling/wms', {
+                    var wmsNenbaychupLayer = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
                         layers: 'total_feeling:orthor_4326_chenhvenh',
                         format: 'image/png',
                         transparent: true,
@@ -93,7 +93,7 @@ LeafletLocateAsset::register($this);
                         maxZoom: 22 // Đặt maxZoom là 22
                     }).addTo(map);
 
-                    var wmsNenDSMLayer = L.tileLayer.wms('https://geotrace.online/geoserver/total_feeling/wms', {
+                    var wmsNenDSMLayer = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
                         layers: 'total_feeling:dsm_4326_chenhvenh',
                         format: 'image/png',
                         transparent: true,
@@ -101,7 +101,7 @@ LeafletLocateAsset::register($this);
                         maxZoom: 22 // Đặt maxZoom là 22
                     });
 
-                    var wmsHoChuaNuocLayer = L.tileLayer.wms('https://geotrace.online/geoserver/total_feeling/wms', {
+                    var wmsHoChuaNuocLayer = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
                         layers: 'total_feeling:4326_ho_chua_nuoc',
                         format: 'image/png',
                         transparent: true,
@@ -109,7 +109,7 @@ LeafletLocateAsset::register($this);
                         maxZoom: 22 // Đặt maxZoom là 22
                     });
 
-                    var wmsRanhChenhvenhLayer = L.tileLayer.wms('https://geotrace.online/geoserver/total_feeling/wms', {
+                    var wmsRanhChenhvenhLayer = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
                         layers: 'total_feeling:4326_ranh_chenhvenh',
                         format: 'image/png',
                         transparent: true,
@@ -117,7 +117,7 @@ LeafletLocateAsset::register($this);
                         maxZoom: 22 // Đặt maxZoom là 22
                     }).addTo(map);
 
-                    var wmsDdmChenhvenhLayer = L.tileLayer.wms('https://geotrace.online/geoserver/total_feeling/wms', {
+                    var wmsDdmChenhvenhLayer = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
                         layers: 'total_feeling:4326_ddm_c_chenhvenh',
                         format: 'image/png',
                         transparent: true,
@@ -125,7 +125,7 @@ LeafletLocateAsset::register($this);
                         maxZoom: 22 // Đặt maxZoom là 22
                     });
 
-                    var wmsCaodoChenhvenhLayer = L.tileLayer.wms('https://geotrace.online/geoserver/total_feeling/wms', {
+                    var wmsCaodoChenhvenhLayer = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
                         layers: 'total_feeling:4326_caodo_chenhvenh',
                         format: 'image/png',
                         transparent: true,
@@ -133,7 +133,7 @@ LeafletLocateAsset::register($this);
                         maxZoom: 22 // Đặt maxZoom là 22
                     });
 
-                    var wmsCocRanhDatLayer = L.tileLayer.wms('https://geotrace.online/geoserver/total_feeling/wms', {
+                    var wmsCocRanhDatLayer = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
                         layers: 'total_feeling:4326_coc_ranhdat',
                         format: 'image/png',
                         transparent: true,
@@ -141,7 +141,7 @@ LeafletLocateAsset::register($this);
                         maxZoom: 22 // Đặt maxZoom là 22
                     });
 
-                    var wmsCayNganHoaLayer = L.tileLayer.wms('https://geotrace.online/geoserver/total_feeling/wms', {
+                    var wmsCayNganHoaLayer = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
                         layers: 'total_feeling:4326_cay_nganhoa',
                         format: 'image/png',
                         transparent: true,
@@ -149,7 +149,7 @@ LeafletLocateAsset::register($this);
                         maxZoom: 22 // Đặt maxZoom là 22
                     }).addTo(map);
 
-                    var wmsCayGaoVangLayer = L.tileLayer.wms('https://geotrace.online/geoserver/total_feeling/wms', {
+                    var wmsCayGaoVangLayer = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
                         layers: 'total_feeling:4326_cay_gaovang',
                         format: 'image/png',
                         transparent: true,
@@ -157,7 +157,7 @@ LeafletLocateAsset::register($this);
                         maxZoom: 22 // Đặt maxZoom là 22
                     }).addTo(map);
 
-                    var wmsCayChuoiLayer = L.tileLayer.wms('https://geotrace.online/geoserver/total_feeling/wms', {
+                    var wmsCayChuoiLayer = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
                         layers: 'total_feeling:4326_cay_chuoi',
                         format: 'image/png',
                         transparent: true,
@@ -165,7 +165,7 @@ LeafletLocateAsset::register($this);
                         maxZoom: 22 // Đặt maxZoom là 22
                     });
 
-                    var wmsCayCaPheLayer = L.tileLayer.wms('https://geotrace.online/geoserver/total_feeling/wms', {
+                    var wmsCayCaPheLayer = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
                         layers: 'total_feeling:4326_cay_caphe',
                         format: 'image/png',
                         transparent: true,
@@ -173,7 +173,7 @@ LeafletLocateAsset::register($this);
                         maxZoom: 22 // Đặt maxZoom là 22
                     }).addTo(map);
 
-                    var wmsCaySenKhacLayer = L.tileLayer.wms('https://geotrace.online/geoserver/total_feeling/wms', {
+                    var wmsCaySenKhacLayer = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
                         layers: 'total_feeling:4326_cay_sen_khac',
                         format: 'image/png',
                         transparent: true,
@@ -322,23 +322,23 @@ LeafletLocateAsset::register($this);
                         var div = L.DomUtil.create('div', 'legend');
                         div.innerHTML += '<h4>Legend</h4>';
                         div.innerHTML +=
-                            '<img src="https://geotrace.online/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_cay_caphe"> Cây cà phê<br>';
+                            '<img src="https://nongdanviet.net/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_cay_caphe"> Cây cà phê<br>';
                         div.innerHTML +=
-                            '<img src="https://geotrace.online/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_cay_chuoi"> Cây chuối<br>';
+                            '<img src="https://nongdanviet.net/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_cay_chuoi"> Cây chuối<br>';
                         div.innerHTML +=
-                            '<img src="https://geotrace.online/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_cay_gaovang"> Cây gáo vàng<br>';
+                            '<img src="https://nongdanviet.net/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_cay_gaovang"> Cây gáo vàng<br>';
                         div.innerHTML +=
-                            '<img src="https://geotrace.online/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_cay_nganhoa"> Cây ngân hoa<br>';
+                            '<img src="https://nongdanviet.net/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_cay_nganhoa"> Cây ngân hoa<br>';
                         div.innerHTML +=
-                            '<img src="https://geotrace.online/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_cay_sen_khac"> Cây sưa<br>';
+                            '<img src="https://nongdanviet.net/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_cay_sen_khac"> Cây sưa<br>';
                         div.innerHTML +=
-                            '<img src="https://geotrace.online/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_coc_ranhdat"> Cọc ranh đất<br>';
+                            '<img src="https://nongdanviet.net/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_coc_ranhdat"> Cọc ranh đất<br>';
                         div.innerHTML +=
-                            '<img src="https://geotrace.online/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_ddm_c_chenhvenh"> Đường đồng mức<br>';
+                            '<img src="https://nongdanviet.net/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_ddm_c_chenhvenh"> Đường đồng mức<br>';
                         div.innerHTML +=
-                            '<img src="https://geotrace.online/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_ranh_chenhvenh"> Ranh chênh vênh<br>';
+                            '<img src="https://nongdanviet.net/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_ranh_chenhvenh"> Ranh chênh vênh<br>';
                         div.innerHTML +=
-                            '<img src="https://geotrace.online/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_caodo_chenhvenh"> Cao độ chênh vênh<br>';
+                            '<img src="https://nongdanviet.net/geoserver/total_feeling/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=total_feeling:4326_caodo_chenhvenh"> Cao độ chênh vênh<br>';
                         return div;
                     };
 
