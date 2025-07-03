@@ -124,12 +124,7 @@ var icon = L.icon({
     iconAnchor: [20, 20],
     popupAnchor: [0, -48],
 });
-var marker = new L.marker([<?= ($model->lat != null) ? $model->lat : 16.711630360842783 ?>,
-    <?= ($model->long != null) ? $model->long : 106.63085460662843 ?>
-], {
-    'draggable': 'true',
-    'icon': icon,
-});
+
 
 var googleMap = L.tileLayer('http://{s}.google.com/vt/lyrs=' + 'r' + '&x={x}&y={y}&z={z}', {
     maxZoom: 24,
@@ -163,57 +158,111 @@ map.addLayer(googleMap, true);
 var x = 10.7840441;
 var y = 106.6939804;
 
-L.control.locate({
-    position: 'topleft',
-    flyTo: true,
-    keepCurrentZoomLevel: true,
-    drawCircle: false,
-    showPopup: false,
-    strings: {
-        title: "Định vị vị trí của bạn"
-    },
-    icon: 'fa fa-location-arrow',
-    locateOptions: {
-        enableHighAccuracy: true,
-        maxZoom: 18,
-        watch: false // <-- CHỐT TẮT THEO DÕI
-    },
-    clickBehavior: {
-        inView: 'stop', 
-        outOfView: 'setView', 
-        inViewNotFollowing: 'setView'
-    }
-}).addTo(map);
+// L.control.locate({
+//     position: 'topleft',
+//     flyTo: true,
+//     keepCurrentZoomLevel: true,
+//     drawCircle: false,
+//     showPopup: false,
+//     strings: {
+//         title: "Định vị vị trí của bạn"
+//     },
+//     icon: 'fa fa-location-arrow',
+//     locateOptions: {
+//         enableHighAccuracy: true,
+//         maxZoom: 18,
+//         watch: false // <-- CHỐT TẮT THEO DÕI
+//     },
+//     clickBehavior: {
+//         inView: 'stop', 
+//         outOfView: 'setView', 
+//         inViewNotFollowing: 'setView'
+//     }
+// }).addTo(map);
 
-setTimeout(() => {
-    const btn = document.querySelector('.leaflet-control-locate a');
-    if (btn) {
-        btn.addEventListener('touchstart', function (e) {
-            e.preventDefault();
-            btn.click();
-        });
-    }
-}, 1000);
+// setTimeout(() => {
+//     const btn = document.querySelector('.leaflet-control-locate a');
+//     if (btn) {
+//         btn.addEventListener('touchstart', function (e) {
+//             e.preventDefault();
+//             btn.click();
+//         });
+//     }
+// }, 1000);
 
-marker.on('dragend', function(event) {
-    const position = event.target.getLatLng();
-    map.panTo(position);
-    $('#geoy-input').val(position.lat);
-    $('#geox-input').val(position.lng);
+// marker.on('dragend', function(event) {
+//     const position = event.target.getLatLng();
+//     map.panTo(position);
+//     $('#geoy-input').val(position.lat);
+//     $('#geox-input').val(position.lng);
+// });
+// map.addLayer(marker);
+
+// let lastLatLng = null;
+
+// map.on("locationfound", function(e) {
+//     const current = L.latLng(e.latitude, e.longitude);
+//     if (!lastLatLng || current.distanceTo(lastLatLng) > 5) {
+//         lastLatLng = current;
+//         $('#geoy-input').val(e.latitude);
+//         $('#geox-input').val(e.longitude);
+//         marker.setLatLng(current);
+//         map.setView(current, 18);
+//     }
+// });
+
+const locateBtn = L.control({position: 'topleft'});
+locateBtn.onAdd = function(map) {
+    const btn = L.DomUtil.create('button', 'leaflet-bar');
+    btn.innerHTML = '<i class="fa fa-location-arrow"></i>';
+    btn.title = 'Theo dõi vị trí liên tục';
+    btn.style.width = '34px';
+    btn.style.height = '34px';
+    btn.onclick = startTracking;
+    return btn;
+};
+locateBtn.addTo(map);
+
+//let marker = L.marker([0, 0], {draggable: true}).addTo(map);
+var marker = new L.marker([<?= ($model->lat != null) ? $model->lat : 16.711630360842783 ?>,
+    <?= ($model->long != null) ? $model->long : 106.63085460662843 ?>
+], {
+    'draggable': 'true',
+    'icon': icon,
 });
-map.addLayer(marker);
 
 let lastLatLng = null;
+let watchId = null;
 
-map.on("locationfound", function(e) {
-    const current = L.latLng(e.latitude, e.longitude);
-    if (!lastLatLng || current.distanceTo(lastLatLng) > 5) {
-        lastLatLng = current;
-        $('#geoy-input').val(e.latitude);
-        $('#geox-input').val(e.longitude);
-        marker.setLatLng(current);
-        map.setView(current, 18);
-    }
-});
+function startTracking() {
+    if (watchId !== null) return; // tránh khởi động nhiều lần
+
+    watchId = navigator.geolocation.watchPosition(
+        function(pos) {
+            const latlng = L.latLng(pos.coords.latitude, pos.coords.longitude);
+
+            if (!lastLatLng || latlng.distanceTo(lastLatLng) > 5) { // sai số <5m thì bỏ qua
+                lastLatLng = latlng;
+
+                // cập nhật input
+                $('#geoy-input').val(latlng.lat);
+                $('#geox-input').val(latlng.lng);
+
+                // cập nhật marker
+                marker.setLatLng(latlng);
+                map.setView(latlng, 18);
+            }
+        },
+        function(err) {
+            console.error("Lỗi GPS:", err.message);
+            alert("Không lấy được vị trí. Vui lòng bật GPS hoặc cấp quyền.");
+        },
+        {
+            enableHighAccuracy: true,
+            maximumAge: 0,
+            timeout: 10000
+        }
+    );
+}
 
 </script>
