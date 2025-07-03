@@ -220,15 +220,15 @@ map.on("locationfound", function(e) {
     const current = L.latLng(e.latitude, e.longitude);
 
     // Nếu chưa có hoặc sai số trên 5 mét
-    if (!lastLatLng || current.distanceTo(lastLatLng) > 5) {
-        lastLatLng = current;
+    // if (!lastLatLng || current.distanceTo(lastLatLng) > 5) {
+    //     lastLatLng = current;
 
-        $('#geoy-input').val(e.latitude);
-        $('#geox-input').val(e.longitude);
+    //     $('#geoy-input').val(e.latitude);
+    //     $('#geox-input').val(e.longitude);
 
-        marker.setLatLng(current);
-        map.setView(current, 18);
-    }
+    //     marker.setLatLng(current);
+    //     map.setView(current, 18);
+    // }
     
 });
 
