@@ -173,7 +173,8 @@ $this->params['breadcrumbs'][] = $this->title;
         icon: 'fa fa-location-arrow', // nếu bạn dùng font-awesome
         locateOptions: {
             enableHighAccuracy: true,
-            maxZoom: 18
+            maxZoom: 18,
+            watch: false
         },
         clickBehavior: {
             inView: 'stop', 
