@@ -227,7 +227,7 @@ map.on("locationfound", function(e) {
     }
 });
 
-\
+
 function resetToGPS() {
     isManualPosition = false;
     map.locate({ setView: true, maxZoom: 18, enableHighAccuracy: true });
