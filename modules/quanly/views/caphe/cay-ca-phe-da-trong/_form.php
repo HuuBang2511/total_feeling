@@ -181,22 +181,6 @@ var x = 10.7840441;
 var y = 106.6939804;
 
 L.control.locate({
-    // position: 'topleft',
-    // drawCircle: false,      
-    // showPopup: false,        //Không hiện popup
-    // setView: true,
-    // keepCurrentZoomLevel: true,
-    // showCompass: false,
-    // locateOptions: {
-    //     enableHighAccuracy: true
-    // },
-   
-    // markerStyle: {},         // bỏ style
-    // markerClass: L.CircleMarker,
-    // createMarker: function () {
-    //     return null;        
-    // }
-
     position: 'topleft',
     flyTo: true,
     keepCurrentZoomLevel: true,
@@ -205,16 +189,17 @@ L.control.locate({
     strings: {
         title: "Định vị vị trí của bạn"
     },
-    icon: 'fa fa-location-arrow', // nếu bạn dùng font-awesome
+    icon: 'fa fa-location-arrow',
     locateOptions: {
         enableHighAccuracy: true,
-        maxZoom: 18
+        maxZoom: 18,
+        watch: false // <-- CHỐT TẮT THEO DÕI
     },
     clickBehavior: {
         inView: 'stop', 
         outOfView: 'setView', 
         inViewNotFollowing: 'setView'
-    }
+     }
 }).addTo(map);
 
 setTimeout(() => {
@@ -222,33 +207,29 @@ setTimeout(() => {
     if (btn) {
         btn.addEventListener('touchstart', function (e) {
             e.preventDefault();
-            btn.click(); // kích hoạt click bằng touch
+            btn.click();
         });
     }
 }, 1000);
 
-marker.on('dragend', function(event) {
-    var marker = event.target;
-    var position = marker.getLatLng();
-    marker.setLatLng(new L.LatLng(position.lat, position.lng), {
-        draggable: 'true'
-    });
-    map.panTo(new L.LatLng(position.lat, position.lng))
+ marker.on('dragend', function(event) {
+    const position = event.target.getLatLng();
+    map.panTo(position);
     $('#geoy-input').val(position.lat);
     $('#geox-input').val(position.lng);
 });
 map.addLayer(marker);
 
-
+let lastLatLng = null;
 
 map.on("locationfound", function(e) {
-    $('#geoy-input').val(e.latitude);
-    $('#geox-input').val(e.longitude);
-
-    // Di chuyển marker nếu cần
-    map.setView([e.latitude,  e.longitude], 18);
-    marker.setLatLng([e.latitude, e.longitude]);
-
-    
+    const current = L.latLng(e.latitude, e.longitude);
+    if (!lastLatLng || current.distanceTo(lastLatLng) > 5) {
+        lastLatLng = current;
+        $('#geoy-input').val(e.latitude);
+        $('#geox-input').val(e.longitude);
+        marker.setLatLng(current);
+        map.setView(current, 18);
+    }
 });
 </script>
