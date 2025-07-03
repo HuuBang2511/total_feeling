@@ -278,7 +278,10 @@ locateBtn.onAdd = function(map) {
     btn.style.background = 'white';
     btn.style.border = 'none';
     btn.style.cursor = 'pointer';
-    btn.onclick = startTracking;
+    btn.onclick = function(e) {
+        e.preventDefault(); 
+        startTracking();
+    };
     return btn;
 };
 locateBtn.addTo(map);
