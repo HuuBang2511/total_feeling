@@ -140,6 +140,41 @@ class APPConfig
                 'key'=>'quanly.caphe/cay-sua-da-trong.index',
                 'hasChild' => false,
             ],
+            [
+                'name' => 'Cây chuối đã trồng',
+                'icon' => 'fa fa-list',
+                'url' => 'quanly/caphe/cay-chuoi-da-trong',
+                'key'=>'quanly.caphe/cay-chuoi-da-trong.index',
+                'hasChild' => false,
+            ],
+            [
+                'name' => 'Cây tre tứ quý đã trồng',
+                'icon' => 'fa fa-list',
+                'url' => 'quanly/caphe/cay-tre-tu-quy-da-trong',
+                'key'=>'quanly.caphe/cay-tre-tu-quy-da-trong.index',
+                'hasChild' => false,
+            ],
+            [
+                'name' => 'Cây bằng lăng đã trồng',
+                'icon' => 'fa fa-list',
+                'url' => 'quanly/caphe/cay-bang-lang-da-trong',
+                'key'=>'quanly.caphe/cay-bang-lang-da-trong.index',
+                'hasChild' => false,
+            ],
+            [
+                'name' => 'Cây muồng hoa vàng đã trồng',
+                'icon' => 'fa fa-list',
+                'url' => 'quanly/caphe/cay-muong-hoa-vang-da-trong',
+                'key'=>'quanly.caphe/cay-muong-hoa-vang-da-trong.index',
+                'hasChild' => false,
+            ],
+            [
+                'name' => 'Cây dừa xiêm lùn đã trồng',
+                'icon' => 'fa fa-list',
+                'url' => 'quanly/caphe/cay-dua-xiem-lun-da-trong',
+                'key'=>'quanly.caphe/cay-dua-xiem-lun-da-trong.index',
+                'hasChild' => false,
+            ],
         ],
         'giadinh' => [
             [

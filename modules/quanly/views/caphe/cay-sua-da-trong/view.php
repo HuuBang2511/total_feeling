@@ -40,6 +40,12 @@ $this->params['breadcrumbs'][] = $this->title;
     max-height: 500px;
     overflow-y: scroll;
 }
+
+.leaflet-control-locate a {
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
 </style>
 
 
@@ -48,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-lg-12">
         <div class="block block-themed">
             <div class="block-header">
-                <h3 class="block-title">Thông tin cây cà phê</h3>
+                <h3 class="block-title">Thông tin cây sưa đã trồng</h3>
                 <div class="block-options">
                     <?= Html::a('Cập nhật', ['update', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
                 </div>
@@ -158,20 +164,33 @@ $this->params['breadcrumbs'][] = $this->title;
 
     L.control.locate({
         position: 'topleft',
-        drawCircle: true,      
-        showPopup: false,        //Không hiện popup
-        setView: true,
+        flyTo: true,
         keepCurrentZoomLevel: true,
-        showCompass: false,
-        locateOptions: {
-            enableHighAccuracy: true
+        drawCircle: false,
+        showPopup: false,
+        strings: {
+            title: "Định vị vị trí của bạn"
         },
-    
-        markerStyle: {},         // bỏ style
-        markerClass: L.CircleMarker,
-        createMarker: function () {
-            return null;        
+        icon: 'fa fa-location-arrow', // nếu bạn dùng font-awesome
+        locateOptions: {
+            enableHighAccuracy: true,
+            maxZoom: 18
+        },
+        clickBehavior: {
+            inView: 'stop', 
+            outOfView: 'setView', 
+            inViewNotFollowing: 'setView'
         }
     }).addTo(map);
+
+    setTimeout(() => {
+        const btn = document.querySelector('.leaflet-control-locate a');
+        if (btn) {
+            btn.addEventListener('touchstart', function (e) {
+                e.preventDefault();
+                btn.click(); // kích hoạt click bằng touch
+            });
+        }
+    }, 1000);
     
 </script>

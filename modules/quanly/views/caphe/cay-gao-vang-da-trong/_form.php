@@ -48,6 +48,12 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? $const['label']['create']
     display: flex;
     flex-direction: column;
 }
+
+.leaflet-control-locate a {
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
 </style>
 
 
@@ -167,21 +173,34 @@ var y = 106.6939804;
 
 L.control.locate({
     position: 'topleft',
-    drawCircle: false,      
-    showPopup: false,        //Không hiện popup
-    setView: true,
+    flyTo: true,
     keepCurrentZoomLevel: true,
-    showCompass: false,
-    locateOptions: {
-        enableHighAccuracy: true
+    drawCircle: false,
+    showPopup: false,
+    strings: {
+        title: "Định vị vị trí của bạn"
     },
-   
-    markerStyle: {},         // bỏ style
-    markerClass: L.CircleMarker,
-    createMarker: function () {
-        return null;        
+    icon: 'fa fa-location-arrow', // nếu bạn dùng font-awesome
+    locateOptions: {
+        enableHighAccuracy: true,
+        maxZoom: 18
+    },
+    clickBehavior: {
+        inView: 'stop', 
+        outOfView: 'setView', 
+        inViewNotFollowing: 'setView'
     }
 }).addTo(map);
+
+setTimeout(() => {
+    const btn = document.querySelector('.leaflet-control-locate a');
+    if (btn) {
+        btn.addEventListener('touchstart', function (e) {
+            e.preventDefault();
+            btn.click(); // kích hoạt click bằng touch
+        });
+    }
+}, 1000);
 
 marker.on('dragend', function(event) {
     var marker = event.target;

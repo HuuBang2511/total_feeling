@@ -49,11 +49,12 @@ $this->params['breadcrumbs'][] = $this->title;
 </style>
 
 
+
 <div class="row">
     <div class="col-lg-12">
         <div class="block block-themed">
             <div class="block-header">
-                <h3 class="block-title">Thông tin cây gáo vàng đã trồng</h3>
+                <h3 class="block-title">Thông tin cây dừa xiêm lùn đã trồng</h3>
                 <div class="block-options">
                     <?= Html::a('Cập nhật', ['update', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
                 </div>
@@ -73,7 +74,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'model' => $model,
                                 'attributes' => [
                                     'macay',
-                                    
                                     'thongtincay',
                                 ],
                             ]) ?>
@@ -125,12 +125,6 @@ $this->params['breadcrumbs'][] = $this->title;
         "Vệ tinh": layerGMapSatellite,
     };
 
-    var caygaovang =  L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
-        layers: 'total_feeling:4326_cay_gaovang',
-        format: 'image/png',
-        transparent: true,
-        maxZoom: 22 // Đặt maxZoom là 22
-    });
 
     var nen = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
         layers: 'total_feeling:orthor_4326_chenhvenh',
@@ -142,7 +136,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     var overLayers = {
         'Nền bay chụp': nen,
-        'Cây gáo vàng': caygaovang,
     };
 
     L.control.layers(baseLayers, overLayers).addTo(map);

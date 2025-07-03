@@ -7,10 +7,10 @@ use app\widgets\gridview\GridView;
 use app\widgets\export\ExportMenu;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\modules\quanly\models\caphe\CayGaoVangDaTrongSearch */
+/* @var $searchModel app\modules\quanly\models\caphe\CayTreTuQuyDaTrongSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = (isset($const['title'])) ? $const['title'] : 'Cây gáo vàng đã trồng';
+$this->title = (isset($const['title'])) ? $const['title'] : 'Cây tre tứ quý đã trồng';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
@@ -31,7 +31,7 @@ $this->registerCss('
 ');
 
 ?>
-<div class="cay-gao-vang-da-trong-index">
+<div class="cay-tre-tu-quy-da-trong-index">
     <div id="ajaxCrudDatatable">
         <?php $fullExportMenu = ExportMenu::widget([
             'dataProvider' => $dataProvider,
