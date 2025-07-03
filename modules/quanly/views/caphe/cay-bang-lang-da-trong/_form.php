@@ -221,6 +221,7 @@ var map = L.map('map').setView([
     <?= ($model->long != null) ? $model->long : 106.63085460662843 ?>
 ], 18);
 
+// Khởi tạo marker mặc định
 var icon = L.icon({
     iconUrl: 'https://auth.hcmgis.vn/uploads/icon/icons8-map-marker-96.png',
     iconSize: [40, 40],
@@ -228,23 +229,25 @@ var icon = L.icon({
     popupAnchor: [0, -48],
 });
 
-var marker = new L.marker([
+var marker = L.marker([
     <?= ($model->lat != null) ? $model->lat : 16.711630360842783 ?>,
     <?= ($model->long != null) ? $model->long : 106.63085460662843 ?>
 ], {
     draggable: true,
-    icon: icon,
-});
-map.addLayer(marker);
+    icon: icon
+}).addTo(map);
 
+// Các lớp nền
 var googleMap = L.tileLayer('http://{s}.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
     maxZoom: 24,
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
 });
+
 var vetinh = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
     maxZoom: 24,
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
 });
+
 var nen = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
     layers: 'total_feeling:orthor_4326_chenhvenh',
     format: 'image/png',
@@ -252,43 +255,43 @@ var nen = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms',
     maxZoom: 22
 }).addTo(map);
 
-var overLayers = {
-    'Nền bay chụp': nen
-};
 var baseLayers = {
     "ggMap": googleMap,
-    'Vệ tinh': vetinh
+    "Vệ tinh": vetinh
 };
-
+var overLayers = {
+    "Nền bay chụp": nen
+};
 L.control.layers(baseLayers, overLayers).addTo(map);
 map.addLayer(googleMap);
 
-// Theo dõi vị trí liên tục bằng watchPosition
+// Theo dõi vị trí liên tục
 let lastLatLng = null;
 let watchId = null;
 
-// Thêm nút định vị thủ công thay cho L.control.locate
+// Nút định vị tùy chỉnh
 const locateBtn = L.control({ position: 'topleft' });
 locateBtn.onAdd = function(map) {
     const btn = L.DomUtil.create('button', 'leaflet-bar');
+    btn.type = 'button'; // Ngăn submit form
     btn.innerHTML = '<i class="fa fa-location-arrow"></i>';
-    btn.title = 'Theo dõi vị trí liên tục';
+    btn.title = 'Theo dõi vị trí';
     btn.style.width = '34px';
     btn.style.height = '34px';
     btn.style.background = 'white';
     btn.style.border = 'none';
     btn.style.cursor = 'pointer';
     btn.onclick = function(e) {
-        e.preventDefault(); 
+        e.preventDefault();
         startTracking();
     };
     return btn;
 };
 locateBtn.addTo(map);
 
-// Theo dõi vị trí người dùng liên tục
+// Bắt đầu theo dõi GPS
 function startTracking() {
-    if (watchId !== null) return; // tránh gọi nhiều lần
+    if (watchId !== null) return; // tránh trùng
 
     watchId = navigator.geolocation.watchPosition(
         function(pos) {
@@ -296,10 +299,12 @@ function startTracking() {
 
             if (!lastLatLng || latlng.distanceTo(lastLatLng) > 5) {
                 lastLatLng = latlng;
-                $('#geoy-input').val(latlng.lat);
-                $('#geox-input').val(latlng.lng);
+
+                // cập nhật marker & input
                 marker.setLatLng(latlng);
                 map.setView(latlng, 18);
+                $('#geoy-input').val(latlng.lat);
+                $('#geox-input').val(latlng.lng);
             }
         },
         function(err) {
@@ -314,12 +319,18 @@ function startTracking() {
     );
 }
 
-// Cập nhật input sau khi kéo marker
+// Dừng GPS khi kéo marker thủ công
 marker.on('dragend', function(event) {
     const position = event.target.getLatLng();
     map.panTo(position);
     $('#geoy-input').val(position.lat);
     $('#geox-input').val(position.lng);
+
+    // Dừng cập nhật GPS
+    if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId);
+        watchId = null;
+    }
 });
 
 </script>
