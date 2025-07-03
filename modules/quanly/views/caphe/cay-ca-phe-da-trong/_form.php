@@ -122,64 +122,64 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? $const['label']['create']
 <?php ActiveForm::end(); ?>
 
 <script>
-var map = L.map('map').setView([<?= ($model->lat != null) ? $model->lat : 16.711630360842783  ?>,
+var map = L.map('map').setView([
+    <?= ($model->lat != null) ? $model->lat : 16.711630360842783 ?>,
     <?= ($model->long != null) ? $model->long : 106.63085460662843 ?>
 ], 18);
 
-var icon = L.icon({
-    iconUrl: 'https://auth.hcmgis.vn/uploads/icon/icons8-map-marker-96.png',
-    //html: '<div style="background-color: blue; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white;"></div>',
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-    popupAnchor: [0, -48],
-});
-var marker = new L.marker([<?= ($model->lat != null) ? $model->lat : 16.711630360842783 ?>,
-    <?= ($model->long != null) ? $model->long : 106.63085460662843 ?>
-], {
-    'draggable': 'true',
-    'icon': icon,
-});
-
-var googleMap = L.tileLayer('http://{s}.google.com/vt/lyrs=' + 'r' + '&x={x}&y={y}&z={z}', {
+// Lớp nền
+var googleMap = L.tileLayer('http://{s}.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
     maxZoom: 24,
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-});
+}).addTo(map);
 
 var vetinh = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
     maxZoom: 24,
-    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-});
-
-var caycaphe =  L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
-    layers: 'total_feeling:4326_cay_caphe',
-    format: 'image/png',
-    transparent: true,
-    maxZoom: 22 // Đặt maxZoom là 22
+    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
 });
 
 var nen = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
     layers: 'total_feeling:orthor_4326_chenhvenh',
     format: 'image/png',
     transparent: true,
-    //CQL_FILTER: 'status = 1',
-    maxZoom: 22 // Đặt maxZoom là 22
+    maxZoom: 22
+});
+
+L.control.layers(
+    { "ggMap": googleMap, "Vệ tinh": vetinh },
+    { "Nền bay chụp": nen }
+).addTo(map);
+
+// Biến trạng thái
+let lastLatLng = null;
+let isManualPosition = false;
+
+// Tạo marker
+var icon = L.icon({
+    iconUrl: 'https://auth.hcmgis.vn/uploads/icon/icons8-map-marker-96.png',
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [0, -48],
+});
+
+var marker = L.marker([
+    <?= ($model->lat != null) ? $model->lat : 16.711630360842783 ?>,
+    <?= ($model->long != null) ? $model->long : 106.63085460662843 ?>
+], {
+    draggable: true,
+    icon: icon
 }).addTo(map);
 
-var overLayers = {
-    'Nền bay chụp': nen,
-    'Cây cà phê': caycaphe,
-};
+// Cập nhật vị trí khi kéo
+marker.on('dragend', function(event) {
+    const position = event.target.getLatLng();
+    map.panTo(position);
+    $('#geoy-input').val(position.lat);
+    $('#geox-input').val(position.lng);
+    isManualPosition = true;
+});
 
-var baseLayers = {
-    "ggMap": googleMap,
-    'Vệ tinh': vetinh,
-};
-
-L.control.layers(baseLayers, overLayers).addTo(map);
-map.addLayer(googleMap, true);
-var x = 10.7840441;
-var y = 106.6939804;
-
+// Nút định vị
 L.control.locate({
     position: 'topleft',
     flyTo: true,
@@ -193,15 +193,16 @@ L.control.locate({
     locateOptions: {
         enableHighAccuracy: true,
         maxZoom: 18,
-        watch: false // <-- CHỐT TẮT THEO DÕI
+        watch: false
     },
     clickBehavior: {
-        inView: 'stop', 
-        outOfView: 'setView', 
+        inView: 'stop',
+        outOfView: 'setView',
         inViewNotFollowing: 'setView'
-     }
+    }
 }).addTo(map);
 
+// Fix cho điện thoại: touchstart
 setTimeout(() => {
     const btn = document.querySelector('.leaflet-control-locate a');
     if (btn) {
@@ -212,17 +213,10 @@ setTimeout(() => {
     }
 }, 1000);
 
- marker.on('dragend', function(event) {
-    const position = event.target.getLatLng();
-    map.panTo(position);
-    $('#geoy-input').val(position.lat);
-    $('#geox-input').val(position.lng);
-});
-map.addLayer(marker);
-
-let lastLatLng = null;
-
+// Xử lý sau khi định vị
 map.on("locationfound", function(e) {
+    if (isManualPosition) return;
+
     const current = L.latLng(e.latitude, e.longitude);
     if (!lastLatLng || current.distanceTo(lastLatLng) > 5) {
         lastLatLng = current;
@@ -232,4 +226,11 @@ map.on("locationfound", function(e) {
         map.setView(current, 18);
     }
 });
+
+\
+function resetToGPS() {
+    isManualPosition = false;
+    map.locate({ setView: true, maxZoom: 18, enableHighAccuracy: true });
+}
+
 </script>
