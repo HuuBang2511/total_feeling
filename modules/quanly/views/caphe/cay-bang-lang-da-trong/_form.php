@@ -210,14 +210,14 @@ map.addLayer(marker);
 
 
 map.on("locationfound", function(e) {
-    // $('#geoy-input').val(e.latitude);
-    // $('#geox-input').val(e.longitude);
+     $('#geoy-input').val(e.latitude);
+     $('#geox-input').val(e.longitude);
 
-    // // Di chuyển marker nếu cần
-    // map.setView([e.latitude,  e.longitude], 18);
-    // marker.setLatLng([e.latitude, e.longitude]);
+     // Di chuyển marker nếu cần
+    map.setView([e.latitude,  e.longitude], 18);
+    marker.setLatLng([e.latitude, e.longitude]);
 
-    const current = L.latLng(e.latitude, e.longitude);
+    //const current = L.latLng(e.latitude, e.longitude);
 
     // Nếu chưa có hoặc sai số trên 5 mét
     // if (!lastLatLng || current.distanceTo(lastLatLng) > 5) {
