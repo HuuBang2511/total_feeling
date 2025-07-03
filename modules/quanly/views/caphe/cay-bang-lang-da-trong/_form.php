@@ -181,7 +181,8 @@ L.control.locate({
         inView: 'stop', 
         outOfView: 'setView', 
         inViewNotFollowing: 'setView'
-    }
+    },
+    watch: false 
 }).addTo(map);
 
 setTimeout(() => {
