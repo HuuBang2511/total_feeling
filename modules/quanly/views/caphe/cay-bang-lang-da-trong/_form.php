@@ -182,6 +182,11 @@ L.control.locate({
         outOfView: 'setView', 
         inViewNotFollowing: 'setView'
     },
+    locateOptions: {
+        enableHighAccuracy: true,
+        maximumAge: 10000, // dùng lại vị trí cũ nếu không thay đổi trong 10s
+        timeout: 10000     // nếu không lấy được vị trí trong 10s thì ngừng
+    },
     watch: false 
 }).addTo(map);
 
