@@ -162,25 +162,23 @@ var icon = L.icon({
     popupAnchor: [0, -48],
 });
 
-var marker = L.marker([
-    <?= ($model->lat != null) ? $model->lat : 16.711630360842783 ?>,
-    <?= ($model->long != null) ? $model->long : 106.63085460662843 ?>
-], {
-    draggable: true,
-    icon: icon
-}).addTo(map);
+let lastLatLng = null;
+let isManualPosition = false;
 
-// Cập nhật vị trí khi kéo
-marker.on('dragend', function(event) {
+// Tạo marker ban đầu và thêm vào bản đồ
+const marker = L.marker([10.77, 106.69], { draggable: true }).addTo(map);
+
+// Cập nhật input khi kéo marker
+marker.on('dragend', function (event) {
     const position = event.target.getLatLng();
-    map.panTo(position);
+    isManualPosition = true; // đánh dấu người dùng tự chỉnh
     $('#geoy-input').val(position.lat);
     $('#geox-input').val(position.lng);
-    isManualPosition = true;
+    map.panTo(position);
 });
 
-// Nút định vị
-L.control.locate({
+// Control định vị
+const locateControl = L.control.locate({
     position: 'topleft',
     flyTo: true,
     keepCurrentZoomLevel: true,
@@ -202,20 +200,28 @@ L.control.locate({
     }
 }).addTo(map);
 
-// Fix cho điện thoại: touchstart
+// Hỗ trợ touchstart trên điện thoại
 setTimeout(() => {
     const btn = document.querySelector('.leaflet-control-locate a');
     if (btn) {
-        btn.addEventListener('touchstart', function (e) {
+        const handleLocate = function (e) {
             e.preventDefault();
-            btn.click();
-        });
+            isManualPosition = false;
+            map.locate({
+                setView: true,
+                maxZoom: 18,
+                enableHighAccuracy: true,
+                watch: false
+            });
+        };
+        btn.addEventListener('click', handleLocate);
+        btn.addEventListener('touchstart', handleLocate);
     }
 }, 1000);
 
-// Xử lý sau khi định vị
+// Xử lý khi định vị thành công
 map.on("locationfound", function(e) {
-    if (isManualPosition) return;
+    if (isManualPosition) return; // bỏ qua nếu người dùng tự chỉnh
 
     const current = L.latLng(e.latitude, e.longitude);
     if (!lastLatLng || current.distanceTo(lastLatLng) > 5) {
@@ -227,10 +233,10 @@ map.on("locationfound", function(e) {
     }
 });
 
-
+// Hàm gọi lại định vị (có thể gọi từ nút ngoài)
 function resetToGPS() {
     isManualPosition = false;
-    map.locate({ setView: true, maxZoom: 18, enableHighAccuracy: true });
+    map.locate({ setView: true, maxZoom: 18, enableHighAccuracy: true, watch: false });
 }
 
 </script>
