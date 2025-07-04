@@ -157,7 +157,7 @@ L.control.layers(
     { "Nền bay chụp": nen, 'Cây cà phê': caycaphe }
 ).addTo(map);
 
-// Biến trạng thái
+
 
 
 // Tạo marker
