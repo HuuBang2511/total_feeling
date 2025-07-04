@@ -172,7 +172,7 @@ const marker = new L.marker([<?= ($model->lat != null) ? $model->lat : 16.711630
 ], {
     'draggable': 'true',
     'icon': icon,
-});
+}).addTo(map);
 
 // Cập nhật input khi kéo marker
 marker.on('dragend', function (event) {
