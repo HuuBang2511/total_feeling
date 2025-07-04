@@ -237,8 +237,50 @@ map.on("locationfound", function(e) {
         marker.setLatLng(current);
         map.setView(current, 18);
     }
+
+    if (!isManualPosition) {
+        const current = L.latLng(e.latitude, e.longitude);
+        lastLatLng = current;
+
+        // Cập nhật vào form
+        $('#geoy-input').val(e.latitude);
+        $('#geox-input').val(e.longitude);
+
+        // Cập nhật vị trí marker
+        marker.setLatLng(current);
+
+        // Đưa map về vị trí
+        map.setView(current, 18);
+    }
 });
 
+const gpsButton = L.control({ position: 'topleft' });
+
+gpsButton.onAdd = function(map) {
+    const btn = L.DomUtil.create('button', 'leaflet-bar leaflet-control leaflet-control-custom');
+    btn.innerHTML = '📍';
+    btn.title = 'Quay lại vị trí hiện tại';
+    btn.style.backgroundColor = 'white';
+    btn.style.width = '34px';
+    btn.style.height = '34px';
+    btn.style.cursor = 'pointer';
+    btn.style.fontSize = '18px';
+    btn.style.lineHeight = '30px';
+    btn.style.textAlign = 'center';
+    btn.style.border = 'none';
+    btn.style.boxShadow = '0 1px 5px rgba(0,0,0,0.65)';
+
+    // Ngăn bản đồ bị kéo khi nhấn
+    L.DomEvent.disableClickPropagation(btn);
+    L.DomEvent.on(btn, 'click', function (e) {
+        e.preventDefault();
+        resetToGPS(); // gọi lại hàm định vị
+    });
+
+    return btn;
+};
+
+gpsButton.addTo(map);
 // Hàm gọi lại định vị (có thể gọi từ nút ngoài)
 function resetToGPS() {
     isManualPosition = false;
