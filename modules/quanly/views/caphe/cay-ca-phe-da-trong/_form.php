@@ -162,8 +162,8 @@ var icon = L.icon({
     popupAnchor: [0, -48],
 });
 
-let lastLatLng = null;
-let isManualPosition = false;
+// let lastLatLng = null;
+// let isManualPosition = false;
 
 // Tạo marker ban đầu và thêm vào bản đồ
 const marker = L.marker([10.77, 106.69], { draggable: true }).addTo(map);
