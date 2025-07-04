@@ -67,12 +67,12 @@ $user_id = Yii::$app->user->id;
                                         </li>
                                         <?php } ?>
                                     <?php endforeach; ?>
-                                    <li class="nav-main-heading">Quản lý thông tin</li>
+                                    <li class="nav-main-heading">Thu thập thông tin</li>
                                     <li class="nav-main-item" id="giadinh">
                                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
                                            aria-haspopup="true" aria-expanded="true" href="#">
                                             <i class="nav-main-link-icon fa fa-list"></i>
-                                            <span class="nav-main-link-name">Quản lý thông tin</span>
+                                            <span class="nav-main-link-name">Thu thập thông tin</span>
                                         </a>
                                         <ul class="nav-main-submenu">
                                             <?php foreach ($caphe as $navchild) : ?>
