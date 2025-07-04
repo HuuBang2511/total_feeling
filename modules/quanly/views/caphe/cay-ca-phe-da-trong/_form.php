@@ -165,7 +165,7 @@ let lastLatLng = null;
 let isManualPosition = false;
 
 // Tạo marker ban đầu và thêm vào bản đồ
-const marker = L.marker([10.77, 106.69], { draggable: true }).addTo(map);
+const marker = L.marker([10.77, 106.69], { draggable: true, icon: icon }).addTo(map);
 
 // Cập nhật input khi kéo marker
 marker.on('dragend', function (event) {
