@@ -143,11 +143,18 @@ var nen = L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms',
     format: 'image/png',
     transparent: true,
     maxZoom: 22
+}).addTo(map);
+
+var caycaphe =  L.tileLayer.wms('https://nongdanviet.net/geoserver/total_feeling/wms', {
+    layers: 'total_feeling:4326_cay_caphe',
+    format: 'image/png',
+    transparent: true,
+    maxZoom: 22 // Đặt maxZoom là 22
 });
 
 L.control.layers(
     { "ggMap": googleMap, "Vệ tinh": vetinh },
-    { "Nền bay chụp": nen }
+    { "Nền bay chụp": nen, 'Cây cà phê': caycaphe }
 ).addTo(map);
 
 // Biến trạng thái
