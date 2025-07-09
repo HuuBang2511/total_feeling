@@ -45,7 +45,7 @@ LeafletLocateAsset::register($this);
 
                     <script>
                     var center = [16.71055, 106.63144];
-
+//
                     // Create the map
                     var map = L.map('map', {
                         defaultExtentControl: true
