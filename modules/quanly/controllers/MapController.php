@@ -28,4 +28,8 @@ class MapController extends QuanlyBaseController
     {
         return $this->render('maptest');
     }
+     public function actionMapglb()
+    {
+        return $this->render('mapglb');
+    }
 }

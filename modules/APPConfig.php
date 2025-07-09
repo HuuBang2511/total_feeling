@@ -270,13 +270,13 @@ class APPConfig
             //     'key'=>'quanly.map.ductrong',
             //     'hasChild' => false,
             // ],
-            // [
-            //     'name' => 'Bản đồ hệ thống mạng lưới cấp nước',
-            //     'icon' => 'fa fa-list',
-            //     'url' => 'quanly/map/giadinh',
-            //     'key'=>'quanly.map.giadinh',
-            //     'hasChild' => false,
-            // ],
+            [
+                'name' => 'Bản đồ 3D',
+                'icon' => 'fa fa-list',
+                'url' => 'quanly/map/mapglb',
+                'key'=>'quanly.map.mapglb',
+                'hasChild' => false,
+            ],
             [
                 'name' => 'Bản đồ hệ thống mạng lưới cà phê',
                 'icon' => 'fa fa-list',
