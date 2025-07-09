@@ -197,7 +197,7 @@
                 loadingOverlay.style.display = 'none';
             };
             
-            const modelPath = '/total_feeling/web/resources/glb/khu2_7a.glb';
+            const modelPath = "<?= Yii::$app->homeUrl ?>resources/glb/khu2_7a.glb";
             loader.load(modelPath, (gltf) => {
                 loadedModel = gltf.scene;
                 

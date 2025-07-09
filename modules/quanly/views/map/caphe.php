@@ -13,11 +13,9 @@ LeafletMeasureAsset::register($this);
 LeafletLocateAsset::register($this);
 ?>
 
-<!-- Tải các tài nguyên cần thiết -->
+<!-- Tải plugin Leaflet-LocateControl trực tiếp -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol@0.79.0/dist/L.Control.Locate.min.css" />
 <script src="https://unpkg.com/leaflet.locatecontrol@0.79.0/dist/L.Control.Locate.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-
 
 <style>
     #map {
@@ -61,11 +59,6 @@ LeafletLocateAsset::register($this);
     }
     .popup-content tr:nth-child(even) {
         background-color: #f2f2f2;
-    }
-    .modal-body iframe {
-        width: 100%;
-        height: calc(100vh - 58px); /* Full height minus header */
-        border: none;
     }
 
     @media only screen and (max-width: 600px) {
@@ -146,13 +139,19 @@ LeafletLocateAsset::register($this);
 
                             // --- CÁC CÔNG CỤ ĐIỀU KHIỂN ---
                             L.control.locate({
-                                position: 'topleft',
+                                position: 'bottomleft',
                                 strings: { title: "Hiện vị trí", popup: "Bạn đang ở đây" },
+                                drawCircle: true,
+                                follow: true
                             }).addTo(map);
 
                             L.control.measure({
-                                position: 'topleft',
+                                position: 'bottomright',
                                 primaryLengthUnit: 'meters',
+                                secondaryLengthUnit: undefined,
+                                primaryAreaUnit: 'sqmeters',
+                                decPoint: ',',
+                                thousandsSep: '.'
                             }).addTo(map);
 
                             L.control.scale({ imperial: false, maxWidth: 150 }).addTo(map);
@@ -161,22 +160,6 @@ LeafletLocateAsset::register($this);
                             overlayMaps["Highlight"] = highlightLayer;
 
                             L.control.layers(baseMaps, overlayMaps).addTo(map);
-
-                            // --- THÊM NÚT MỞ 3D VIEWER ---
-                            const view3DControl = L.control({ position: 'topleft' });
-                            view3DControl.onAdd = function (map) {
-                                const button = L.DomUtil.create('button', 'leaflet-bar leaflet-control');
-                                button.innerHTML = '<i class="fa-solid fa-cube"></i>';
-                                button.title = 'Xem mô hình 3D';
-                                button.style.backgroundColor = 'white';
-                                button.style.width = '30px';
-                                button.style.height = '30px';
-                                button.setAttribute('data-bs-toggle', 'modal');
-                                button.setAttribute('data-bs-target', '#modal-3d-viewer');
-                                return button;
-                            };
-                            view3DControl.addTo(map);
-
 
                             // --- XỬ LÝ SỰ KIỆN CLICK (GETFEATUREINFO) TỐI ƯU HÓA ---
                             map.on('click', function (e) {
@@ -197,7 +180,7 @@ LeafletLocateAsset::register($this);
                                     LAYERS: visibleLayers.join(','),
                                     QUERY_LAYERS: visibleLayers.join(','),
                                     BBOX: bbox,
-                                    FEATURE_COUNT: 10,
+                                    FEATURE_COUNT: 10, // Tăng số lượng để lấy đủ thông tin
                                     HEIGHT: size.y,
                                     WIDTH: size.x,
                                     FORMAT: 'image/png',
@@ -227,6 +210,7 @@ LeafletLocateAsset::register($this);
                                                     case '4326_ho_chua_nuoc':
                                                         popupContent += `<tr><td><strong>Diện tích:</strong></td><td>${properties.dientich}</td></tr>`;
                                                         break;
+                                                    // Thêm các case khác cho các lớp có thông tin ở đây
                                                 }
                                                 highlightedFeatures.push(feature);
                                             });
@@ -248,7 +232,7 @@ LeafletLocateAsset::register($this);
                                 const div = L.DomUtil.create('div', 'legend hidden');
                                 div.innerHTML += '<h4>Chú thích</h4>';
                                 wmsLayersConfig.forEach(config => {
-                                    if(config.name.startsWith('4326_')) {
+                                    if(config.name.startsWith('4326_')) { // Chỉ hiện legend cho các lớp vector
                                         const legendUrl = `${WMS_URL}?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=${WORKSPACE}:${config.name}`;
                                         div.innerHTML += `<div class="legend-item"><img src="${legendUrl}"> ${config.title}</div>`;
                                     }
@@ -276,20 +260,4 @@ LeafletLocateAsset::register($this);
             </div>
         </div>
     </div>
-</div>
-
-<!-- Modal để hiển thị 3D Viewer -->
-<div class="modal fade" id="modal-3d-viewer" tabindex="-1" aria-labelledby="modal3DViewerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modal3DViewerLabel">Trình xem mô hình 3D</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body p-0">
-        <!-- Iframe sẽ tải trang mapglb.php -->
-        <iframe src="https://nongdanviet.net/quanly/map/mapglb" title="Trình xem mô hình 3D"></iframe>
-      </div>
-    </div>
-  </div>
 </div>
