@@ -83,7 +83,7 @@ $this->registerCss('
             ],
             'tableOptions' => ['class' => 'table table-striped'],
             'layout' => "{items}\n{pager}",
-        ])?>s
+        ])?>
     </div>
 </div>
 <?php Modal::begin([
