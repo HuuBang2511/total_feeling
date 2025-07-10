@@ -1,44 +1,73 @@
 <?php
 
 namespace app\modules\quanly\controllers\caphe;
-use app\modules\quanly\base\QuanlyBaseController;
 
 use Yii;
-use app\modules\quanly\models\caphe\DuongDongMuc;
-use app\modules\quanly\models\caphe\DuongDongMucSearch;
+use app\modules\quanly\models\caphe\Cay;
+use app\modules\quanly\models\caphe\CaySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
-
+use app\modules\quanly\base\QuanlyBaseController;
+use app\modules\quanly\models\caphe\danhmuc\DmLoaicay;
+use app\modules\quanly\models\caphe\danhmuc\DmNhomcay;
 
 /**
- * DuongDongMucController implements the CRUD actions for DuongDongMuc model.
+ * CayController implements the CRUD actions for Cay model.
  */
-class DuongDongMucController extends QuanlyBaseController
+class CayController extends QuanlyBaseController
 {
 
-    public $title = "Đường đồng mức";
+    public $title = "Cây trồng";
+
+    public $const;
+
+    public function init(){
+        parent::init();
+            $this->const = [
+            'title' => 'Cây trồng',
+            'label' => [
+                'index' => 'Danh sách',
+                'create' => 'Thêm mới',
+                'update' => 'Cập nhật',
+                'view' => 'Thông tin chi tiết',
+                'statistic' => 'Thống kê',
+            ],
+            'url' => [
+                'index' => 'index',
+                'create' => 'Thêm mới',
+                'update' => 'Cập nhật',
+                'view' => 'Thông tin chi tiết',
+                'statistic' => 'Thống kê',
+            ],
+        ];
+    }
 
     /**
-     * Lists all DuongDongMuc models.
+     * Lists all Cay models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new DuongDongMucSearch();
+        $searchModel = new CaySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $loaicay = DmLoaicay::find()->where(['status' => 1])->all();
+        $nhomcay = DmNhomcay::find()->where(['status' => 1])->all();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'loaicay' => $loaicay,
+            'nhomcay' => $nhomcay,
         ]);
     }
 
 
     /**
-     * Displays a single DuongDongMuc model.
+     * Displays a single Cay model.
      * @param integer $id
      * @return mixed
      */
@@ -50,7 +79,7 @@ class DuongDongMucController extends QuanlyBaseController
     }
 
     /**
-     * Creates a new DuongDongMuc model.
+     * Creates a new Cay model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -58,27 +87,34 @@ class DuongDongMucController extends QuanlyBaseController
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new DuongDongMuc();
-        $table = '"4326_ddm_c_chenhvenh"';
+        $model = new Cay();
 
-        if ($model->load($request->post())) {
-            $model->save();
+        $loaicay = DmLoaicay::find()->where(['status' => 1])->all();
+        $nhomcay = DmNhomcay::find()->where(['status' => 1])->all();
 
-            Yii::$app->db
-            ->createCommand("UPDATE ".$table." SET geom = ST_SETSRID(ST_GeomFromText(ST_AsText(ST_GeomFromGeoJSON('" . $model->geojson . "'))),4326) WHERE id = :id")
+        $table = '"cay"';
+
+        if ($model->load($request->post()) && $model->save()) {
+            Yii::$app->db->createCommand("UPDATE".$table."SET geom = ST_GeomFromText('POINT($model->long"." "."$model->lat)', 4326) WHERE id = :id")
+            ->bindValue(':id', $model->id)
+            ->execute();
+
+            Yii::$app->db->createCommand("UPDATE".$table."SET geojson = st_asgeojson(ST_GeomFromText('POINT($model->long"." "."$model->lat)', 4326)) WHERE id = :id")
             ->bindValue(':id', $model->id)
             ->execute();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'loaicay' => $loaicay,
+                'nhomcay' => $nhomcay,
             ]);
         }
 
     }
 
     /**
-     * Updates an existing DuongDongMuc model.
+     * Updates an existing Cay model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -88,7 +124,11 @@ class DuongDongMucController extends QuanlyBaseController
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);
-        $table = '"4326_ddm_c_chenhvenh"';
+
+        $loaicay = DmLoaicay::find()->where(['status' => 1])->all();
+        $nhomcay = DmNhomcay::find()->where(['status' => 1])->all();
+
+        $table = '"cay"';
 
         //$oldGeomGeojson = $model->geojson;
 
@@ -96,21 +136,26 @@ class DuongDongMucController extends QuanlyBaseController
 
             $model->save();
 
-            Yii::$app->db
-                ->createCommand("UPDATE ".$table." SET geom = ST_SETSRID(ST_GeomFromText(ST_AsText(ST_GeomFromGeoJSON('" . $model->geojson . "'))),4326) WHERE id = :id")
-                ->bindValue(':id', $model->id)
-                ->execute();
+            Yii::$app->db->createCommand("UPDATE".$table."SET geom = ST_GeomFromText('POINT($model->long"." "."$model->lat)', 4326) WHERE id = :id")
+            ->bindValue(':id', $model->id)
+            ->execute();
+
+            Yii::$app->db->createCommand("UPDATE".$table."SET geojson = st_asgeojson(ST_GeomFromText('POINT($model->long"." "."$model->lat)', 4326)) WHERE id = :id")
+            ->bindValue(':id', $model->id)
+            ->execute();
 
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'loaicay' => $loaicay,
+                'nhomcay' => $nhomcay,
             ]);
         }
     }
 
     /**
-     * Delete an existing DuongDongMuc model.
+     * Delete an existing Cay model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -158,15 +203,15 @@ class DuongDongMucController extends QuanlyBaseController
 
     
     /**
-     * Finds the DuongDongMuc model based on its primary key value.
+     * Finds the Cay model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return DuongDongMuc the loaded model
+     * @return Cay the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = DuongDongMuc::findOne($id)) !== null) {
+        if (($model = Cay::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

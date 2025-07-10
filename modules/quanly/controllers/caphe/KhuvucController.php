@@ -1,33 +1,55 @@
 <?php
 
 namespace app\modules\quanly\controllers\caphe;
-use app\modules\quanly\base\QuanlyBaseController;
 
 use Yii;
-use app\modules\quanly\models\caphe\DuongDongMuc;
-use app\modules\quanly\models\caphe\DuongDongMucSearch;
+use app\modules\quanly\models\caphe\Khuvuc;
+use app\modules\quanly\models\caphe\KhuvucSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
-
+use app\modules\quanly\base\QuanlyBaseController;
 
 /**
- * DuongDongMucController implements the CRUD actions for DuongDongMuc model.
+ * KhuvucController implements the CRUD actions for Khuvuc model.
  */
-class DuongDongMucController extends QuanlyBaseController
+class KhuvucController extends QuanlyBaseController
 {
 
-    public $title = "Đường đồng mức";
+    public $title = "Khu vực";
+
+    public $const;
+
+    public function init(){
+        parent::init();
+            $this->const = [
+            'title' => 'Khu vực',
+            'label' => [
+                'index' => 'Danh sách',
+                'create' => 'Thêm mới',
+                'update' => 'Cập nhật',
+                'view' => 'Thông tin chi tiết',
+                'statistic' => 'Thống kê',
+            ],
+            'url' => [
+                'index' => 'index',
+                'create' => 'Thêm mới',
+                'update' => 'Cập nhật',
+                'view' => 'Thông tin chi tiết',
+                'statistic' => 'Thống kê',
+            ],
+        ];
+    }
 
     /**
-     * Lists all DuongDongMuc models.
+     * Lists all Vuon models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new DuongDongMucSearch();
+        $searchModel = new KhuvucSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -38,19 +60,27 @@ class DuongDongMucController extends QuanlyBaseController
 
 
     /**
-     * Displays a single DuongDongMuc model.
+     * Displays a single CayBangLangDaTrong model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $geojson = Khuvuc::find()->select(['st_asgeojson(geom)'])->where(['id' => $id])->asArray()->one();
+        
+        $geojson = $geojson['st_asgeojson'];
+
+        //dd($geojson);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'geojson' => $geojson,
         ]);
     }
 
     /**
-     * Creates a new DuongDongMuc model.
+     * Creates a new CayGaoVangDaTrong model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -58,8 +88,9 @@ class DuongDongMucController extends QuanlyBaseController
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new DuongDongMuc();
-        $table = '"4326_ddm_c_chenhvenh"';
+        $model = new Khuvuc();
+
+        $table = '"khuvuc"';
 
         if ($model->load($request->post())) {
             $model->save();
@@ -68,6 +99,7 @@ class DuongDongMucController extends QuanlyBaseController
             ->createCommand("UPDATE ".$table." SET geom = ST_SETSRID(ST_GeomFromText(ST_AsText(ST_GeomFromGeoJSON('" . $model->geojson . "'))),4326) WHERE id = :id")
             ->bindValue(':id', $model->id)
             ->execute();
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -78,7 +110,7 @@ class DuongDongMucController extends QuanlyBaseController
     }
 
     /**
-     * Updates an existing DuongDongMuc model.
+     * Updates an existing CayGaoVangDaTrong model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -88,18 +120,19 @@ class DuongDongMucController extends QuanlyBaseController
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);
-        $table = '"4326_ddm_c_chenhvenh"';
+
+        $table = '"khuvuc"';
 
         //$oldGeomGeojson = $model->geojson;
 
         if ($model->load($request->post())) {
 
-            $model->save();
-
             Yii::$app->db
                 ->createCommand("UPDATE ".$table." SET geom = ST_SETSRID(ST_GeomFromText(ST_AsText(ST_GeomFromGeoJSON('" . $model->geojson . "'))),4326) WHERE id = :id")
                 ->bindValue(':id', $model->id)
                 ->execute();
+
+            $model->save();
 
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -110,7 +143,7 @@ class DuongDongMucController extends QuanlyBaseController
     }
 
     /**
-     * Delete an existing DuongDongMuc model.
+     * Delete an existing CayGaoVangDaTrong model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -158,15 +191,15 @@ class DuongDongMucController extends QuanlyBaseController
 
     
     /**
-     * Finds the DuongDongMuc model based on its primary key value.
+     * Finds the Khuvuc model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return DuongDongMuc the loaded model
+     * @return Khuvuc the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = DuongDongMuc::findOne($id)) !== null) {
+        if (($model = Khuvuc::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -9,9 +9,16 @@
 namespace app\modules\services;
 
 use DOMStringExtend;
+use hcmgis\user\models\AuthUser;
+use yii\helpers\ArrayHelper;
 use yii\helpers\VarDumper;
 
 class UtilityService {
+
+    const STATUS = [
+        'ACTIVE' => 1,
+        'DELETED' => 0,
+    ];
 
     public static function alert($content){
         \Yii::$app->session->addFlash($content,true);
@@ -52,28 +59,121 @@ class UtilityService {
         return $str;
     }
 
-    public static function convertDateFromDb($date){
-        if($date != null){
-            return date('d/m/Y',strtotime($date));
+    public static function beforeCreate($model){
+        if($model->hasAttribute('status')){
+            $model->status = self::STATUS['ACTIVE'];
+        }
+
+        if($model->hasAttribute('created_at')){
+            $model->created_at = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s')));
+        }
+
+        if($model->hasAttribute('created_by')){
+            $model->created_by = (\Yii::$app->user != null) ? \Yii::$app->user->id : 0;
+        }
+    }
+
+    public static function beforeUpdate($model){
+
+        if($model->hasAttribute('updated_at')){
+            $model->updated_at = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s')));
+        }
+
+        if($model->hasAttribute('updated_by')){
+            $model->updated_by = (\Yii::$app->user != null) ? \Yii::$app->user->id : 0;
+        }
+    }
+
+    public static function convertDateFromDb($date)
+    {
+        if ($date != null) {
+            return date('d/m/Y', strtotime($date));
         } else {
             return '';
         }
     }
 
-    public static function convertDateFromMaskedInput($date){
-        if($date != null){
-            return date('Y-m-d',strtotime(str_replace('/','-',$date)));
+    public static function convertAllDatesFromDb($model)
+    {
+        $dateAttributes = (ArrayHelper::index($model->getTableSchema()->columns, 'name', 'type'))['date'];
+        foreach ($dateAttributes as $dateAttribute) {
+            $model[$dateAttribute->name] = self::convertDateFromDb($model[$dateAttribute->name]);
+        }
+        return $model;
+    }
+
+    public static function convertDateFromMaskedInput($date)
+    {
+        if ($date != null) {
+            return date('Y-m-d', strtotime(str_replace('/', '-', $date)));
         } else {
             return '';
         }
     }
 
-    public static function getRelatedInfo($model = null){
-        if($model != null){
+    public static function convertDateImport($date)
+    {
+        if ($date != null) {
+            return date('d/m/Y', strtotime(str_replace('-', '/', $date)));
+        } else {
+            return '';
+        }
+    }
+
+    public static function convertAllDateImport($model)
+    {
+        $dateAttributes = (ArrayHelper::index($model->getTableSchema()->columns, 'name', 'type'))['date'];
+        foreach ($dateAttributes as $dateAttribute) {
+            $model[$dateAttribute->name] = self::convertDateImport($model[$dateAttribute->name]);
+        }
+        return $model;
+    }
+
+    public static function convertAllDatesFromMaskedInput($model)
+    {
+        $dateAttributes = (ArrayHelper::index($model->getTableSchema()->columns, 'name', 'type'))['date'];
+        foreach ($dateAttributes as $dateAttribute) {
+            $model[$dateAttribute->name] = self::convertDateFromMaskedInput($model[$dateAttribute->name]);
+        }
+        return $model;
+    }
+
+    public static function getRelatedInfo($model = null)
+    {
+        if ($model != null) {
             return $model->ten;
         } else {
             return '';
         }
     }
 
+    public static function getUserInfo($id)
+    {
+        return AuthUser::findOne($id)->fullname;
+    }
+
+    public static function convertFormat($field, $formatTo, $formatEnd)
+    {
+        if ($field) {
+            $date = \DateTime::createFromFormat($formatTo, $field);
+            return $date->format($formatEnd);
+        }
+        return null;
+    }
+
+    public static function generateUuid()
+    {
+        $data = random_bytes(16);
+
+        // Set version to 4
+        $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
+
+        // Set variant to 10
+        $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
+
+        return vsprintf(
+            '%s%s-%s-%s-%s-%s%s%s',
+            str_split(bin2hex($data), 4)
+        );
+    }
 }

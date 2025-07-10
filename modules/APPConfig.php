@@ -111,6 +111,36 @@ class APPConfig
 //                 'hasChild' => false,
 //             ],
 //         ],
+        'quanly' => [
+            [
+                'name' => 'Cây trồng',
+                'icon' => 'fa fa-list',
+                'url' => 'quanly/caphe/cay',
+                'key'=>'quanly.caphe/cay.index',
+                'hasChild' => false,
+            ],
+            [
+                'name' => 'Vườn',
+                'icon' => 'fa fa-list',
+                'url' => 'quanly/caphe/vuon',
+                'key'=>'quanly.caphe/vuon.index',
+                'hasChild' => false,
+            ],
+            [
+                'name' => 'Khu vực',
+                'icon' => 'fa fa-list',
+                'url' => 'quanly/caphe/khuvuc',
+                'key'=>'quanly.caphe/khuvuc.index',
+                'hasChild' => false,
+            ],
+            [
+                'name' => 'Ruộng bậc thang',
+                'icon' => 'fa fa-list',
+                'url' => 'quanly/caphe/ruongbacthang',
+                'key'=>'quanly.caphe/ruongbacthang.index',
+                'hasChild' => false,
+            ],
+        ],
         'caphe' => [
             [
                 'name' => 'Cây cà phê đã trồng',
