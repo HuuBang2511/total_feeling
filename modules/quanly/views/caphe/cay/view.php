@@ -87,6 +87,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                             return ($model->nhomcay_id != null) ? $model->nhomcay->ten : '';
                                         }
                                     ],
+                                    [
+                                        'label' => 'Vườn',
+                                        'value' => function($model){
+                                            return ($model->vuon_id != null) ? $model->vuon->ten : '';
+                                        }
+                                    ],
                                     'giong',
                                     'dacdiem',
                                     'nguongoc',

@@ -14,6 +14,7 @@ $this->title = (isset($const['title'])) ? $const['title'] : 'Cây chuối đã t
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
+
 $this->registerCss('
     @media (max-width: 767px) {
         .table-responsive .table th,

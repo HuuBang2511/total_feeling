@@ -130,7 +130,16 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? $const['label']['create']
         </div>
 
         <div class="row mt-3">
-            <div class="col-lg-6">
+            <div class="col-lg-3">
+                <?= $form->field($model, 'vuon_id')->widget(Select2::className(), [
+                        'data' => ArrayHelper::map($vuon, 'id', 'ten'),
+                        'options' => ['prompt' => 'Chọn vườn'],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                ]) ?>
+            </div>
+            <div class="col-lg-3">
                 <?= $form->field($model, 'giong')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-lg-6">

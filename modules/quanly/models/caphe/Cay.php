@@ -4,6 +4,7 @@ namespace app\modules\quanly\models\caphe;
 use app\modules\quanly\base\QuanlyBaseModel;
 use app\modules\quanly\models\caphe\danhmuc\DmLoaicay;
 use app\modules\quanly\models\caphe\danhmuc\DmNhomcay;
+use app\modules\quanly\models\caphe\Vuon;
 use Yii;
 
 /**
@@ -33,9 +34,11 @@ use Yii;
  * @property string|null $updated_at
  * @property int|null $created_by
  * @property int|null $updated_by
+ * @property int|null $vuon_id
  *
  * @property DmLoaicay $loaicay
  * @property DmNhomcay $nhomcay
+ * @property Vuon $vuon
  */
 class Cay extends QuanlyBaseModel
 {
@@ -55,11 +58,12 @@ class Cay extends QuanlyBaseModel
         return [
             [['maso', 'giong', 'loaire', 'khanang_giudat', 'ghichu_sinhkhoi', 'dacdiem', 'nguongoc', 'ghichu', 'geom', 'geojson', 'lat', 'long'], 'string'],
             [['ngay', 'created_at', 'updated_at'], 'safe'],
-            [['nhomcay_id', 'loaicay_id', 'status', 'created_by', 'updated_by'], 'default', 'value' => null],
-            [['nhomcay_id', 'loaicay_id', 'status', 'created_by', 'updated_by'], 'integer'],
+            [['nhomcay_id', 'loaicay_id', 'status', 'created_by', 'updated_by', 'vuon_id'], 'default', 'value' => null],
+            [['nhomcay_id', 'loaicay_id', 'status', 'created_by', 'updated_by', 'vuon_id'], 'integer'],
             [['chieucao', 'duongkinhthan', 'duongkinhtan'], 'number'],
             [['loaicay_id'], 'exist', 'skipOnError' => true, 'targetClass' => DmLoaicay::className(), 'targetAttribute' => ['loaicay_id' => 'id']],
             [['nhomcay_id'], 'exist', 'skipOnError' => true, 'targetClass' => DmNhomcay::className(), 'targetAttribute' => ['nhomcay_id' => 'id']],
+            [['vuon_id'], 'exist', 'skipOnError' => true, 'targetClass' => Vuon::className(), 'targetAttribute' => ['vuon_id' => 'id']],
         ];
     }
 
@@ -93,6 +97,7 @@ class Cay extends QuanlyBaseModel
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
+            'vuon_id' => 'Vườn',
         ];
     }
 
@@ -114,5 +119,15 @@ class Cay extends QuanlyBaseModel
     public function getNhomcay()
     {
         return $this->hasOne(DmNhomcay::className(), ['id' => 'nhomcay_id']);
+    }
+
+    /**
+     * Gets query for [[Vuon]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVuon()
+    {
+        return $this->hasOne(Vuon::className(), ['id' => 'vuon_id']);
     }
 }

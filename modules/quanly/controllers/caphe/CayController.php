@@ -13,6 +13,7 @@ use yii\helpers\Html;
 use app\modules\quanly\base\QuanlyBaseController;
 use app\modules\quanly\models\caphe\danhmuc\DmLoaicay;
 use app\modules\quanly\models\caphe\danhmuc\DmNhomcay;
+use app\modules\quanly\models\caphe\Vuon;
 
 /**
  * CayController implements the CRUD actions for Cay model.
@@ -56,12 +57,14 @@ class CayController extends QuanlyBaseController
 
         $loaicay = DmLoaicay::find()->where(['status' => 1])->all();
         $nhomcay = DmNhomcay::find()->where(['status' => 1])->all();
+        $vuon = Vuon::find()->where(['status' => 1])->all();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'loaicay' => $loaicay,
             'nhomcay' => $nhomcay,
+            'vuon' => $vuon,
         ]);
     }
 
@@ -72,7 +75,10 @@ class CayController extends QuanlyBaseController
      * @return mixed
      */
     public function actionView($id)
-    {
+    {   $model = $this->findModel($id);
+
+        //dd($model->vuon);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -91,6 +97,7 @@ class CayController extends QuanlyBaseController
 
         $loaicay = DmLoaicay::find()->where(['status' => 1])->all();
         $nhomcay = DmNhomcay::find()->where(['status' => 1])->all();
+        $vuon = Vuon::find()->where(['status' => 1])->all();
 
         $table = '"cay"';
 
@@ -108,6 +115,7 @@ class CayController extends QuanlyBaseController
                 'model' => $model,
                 'loaicay' => $loaicay,
                 'nhomcay' => $nhomcay,
+                'vuon' => $vuon,
             ]);
         }
 
@@ -127,6 +135,8 @@ class CayController extends QuanlyBaseController
 
         $loaicay = DmLoaicay::find()->where(['status' => 1])->all();
         $nhomcay = DmNhomcay::find()->where(['status' => 1])->all();
+        $vuon = Vuon::find()->where(['status' => 1])->all();
+
 
         $table = '"cay"';
 
@@ -150,6 +160,7 @@ class CayController extends QuanlyBaseController
                 'model' => $model,
                 'loaicay' => $loaicay,
                 'nhomcay' => $nhomcay,
+                'vuon' => $vuon
             ]);
         }
     }

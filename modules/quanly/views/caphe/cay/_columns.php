@@ -26,6 +26,7 @@ return [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'nhomcay_id',
     // ],
+    
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'nhomcay_id',
@@ -49,6 +50,20 @@ return [
         'filterType' => GridView::FILTER_SELECT2,
         'filterWidgetOptions' => [
             'options' => ['prompt' => 'Chọn loại cây'],
+            'pluginOptions' => [
+                'allowClear' => true,
+            ],
+        ],
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'vuon_id',
+        'format' => 'raw',
+        'value' => 'vuon.ten',
+        'filter' => ArrayHelper::map($vuon, 'id', 'ten'),
+        'filterType' => GridView::FILTER_SELECT2,
+        'filterWidgetOptions' => [
+            'options' => ['prompt' => 'Chọn vườn'],
             'pluginOptions' => [
                 'allowClear' => true,
             ],

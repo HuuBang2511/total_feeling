@@ -90,7 +90,7 @@ class RuongbacthangController extends QuanlyBaseController
         $request = Yii::$app->request;
         $model = new Ruongbacthang();
 
-        $table = '"khuvuc"';
+        $table = '"ruongbacthang"';
 
         if ($model->load($request->post())) {
             $model->save();
@@ -121,7 +121,7 @@ class RuongbacthangController extends QuanlyBaseController
         $request = Yii::$app->request;
         $model = $this->findModel($id);
 
-        $table = '"khuvuc"';
+        $table = '"ruongbacthang"';
 
         //$oldGeomGeojson = $model->geojson;
 
