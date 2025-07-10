@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 var center = [16.711630360842783, 106.63085460662843];
 
                                 // Create the map
-                                var map = L.map('map').setView(center, 14);
+                                var map = L.map('map').setView(center, 18);
                                 var baseMaps = {
                                     "Bản đồ Google": L.tileLayer('http://{s}.google.com/vt/lyrs=' + 'r' + '&x={x}&y={y}&z={z}', {
                                         maxZoom: 22,
