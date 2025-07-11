@@ -14,6 +14,7 @@ use app\modules\quanly\base\QuanlyBaseController;
 use app\modules\quanly\models\caphe\danhmuc\DmLoaicay;
 use app\modules\quanly\models\caphe\danhmuc\DmNhomcay;
 use app\modules\quanly\models\caphe\Vuon;
+use app\modules\quanly\models\caphe\Khuvuc;
 
 /**
  * CayController implements the CRUD actions for Cay model.
@@ -46,6 +47,38 @@ class CayController extends QuanlyBaseController
         ];
     }
 
+    public function actionLoaicay() {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $nhomcay_id = $parents[0];
+                $out = DmLoaicay::find()->select('id, ten as name')
+                    ->where(['nhomcay_id' => $nhomcay_id])
+                    ->orderBy('ten')->asArray()->all();
+                return ['output'=>$out, 'selected'=>''];
+            }
+        }
+        return ['output'=>'', 'selected'=>''];
+    }
+
+    public function actionLuong() {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $khuvuc_id = $parents[0];
+                $out = Vuon::find()->select('id, ten as name')
+                    ->where(['khuvuc_id' => $khuvuc_id])
+                    ->orderBy('ten')->asArray()->all();
+                return ['output'=>$out, 'selected'=>''];
+            }
+        }
+        return ['output'=>'', 'selected'=>''];
+    }
+
     /**
      * Lists all Cay models.
      * @return mixed
@@ -58,6 +91,7 @@ class CayController extends QuanlyBaseController
         $loaicay = DmLoaicay::find()->where(['status' => 1])->all();
         $nhomcay = DmNhomcay::find()->where(['status' => 1])->all();
         $vuon = Vuon::find()->where(['status' => 1])->all();
+        $khuvuc = Khuvuc::find()->where(['status' => 1])->all();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -65,6 +99,7 @@ class CayController extends QuanlyBaseController
             'loaicay' => $loaicay,
             'nhomcay' => $nhomcay,
             'vuon' => $vuon,
+            'khuvuc' => $khuvuc,
         ]);
     }
 
@@ -98,10 +133,19 @@ class CayController extends QuanlyBaseController
         $loaicay = DmLoaicay::find()->where(['status' => 1])->all();
         $nhomcay = DmNhomcay::find()->where(['status' => 1])->all();
         $vuon = Vuon::find()->where(['status' => 1])->all();
+        $khuvuc = Khuvuc::find()->where(['status' => 1])->all();
 
         $table = '"cay"';
 
         if ($model->load($request->post()) && $model->save()) {
+
+            if($model->khuvuc_id != null && $model->vuon_id != null){
+                $model->maso = $model->khuvuc->ten.'.'.$model->vuon->ten.'.'.$model->id;
+                $model->save();
+            }
+
+
+
             Yii::$app->db->createCommand("UPDATE".$table."SET geom = ST_GeomFromText('POINT($model->long"." "."$model->lat)', 4326) WHERE id = :id")
             ->bindValue(':id', $model->id)
             ->execute();
@@ -116,6 +160,7 @@ class CayController extends QuanlyBaseController
                 'loaicay' => $loaicay,
                 'nhomcay' => $nhomcay,
                 'vuon' => $vuon,
+                'khuvuc' => $khuvuc,
             ]);
         }
 
@@ -136,6 +181,7 @@ class CayController extends QuanlyBaseController
         $loaicay = DmLoaicay::find()->where(['status' => 1])->all();
         $nhomcay = DmNhomcay::find()->where(['status' => 1])->all();
         $vuon = Vuon::find()->where(['status' => 1])->all();
+        $khuvuc = Khuvuc::find()->where(['status' => 1])->all();
 
 
         $table = '"cay"';
@@ -143,6 +189,10 @@ class CayController extends QuanlyBaseController
         //$oldGeomGeojson = $model->geojson;
 
         if ($model->load($request->post())) {
+
+            if($model->khuvuc_id != null && $model->vuon_id != null){
+                $model->maso = $model->khuvuc->ten.'.'.$model->vuon->ten.'.'.$model->id;
+            }
 
             $model->save();
 
@@ -160,7 +210,8 @@ class CayController extends QuanlyBaseController
                 'model' => $model,
                 'loaicay' => $loaicay,
                 'nhomcay' => $nhomcay,
-                'vuon' => $vuon
+                'vuon' => $vuon,
+                'khuvuc' => $khuvuc,
             ]);
         }
     }

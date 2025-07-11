@@ -10,5 +10,6 @@ use yii\helpers\Html;
 <div class="vuon-create">
     <?= $this->render('_form', [
         'model' => $model,
+        'khuvuc' => $khuvuc,
     ]) ?>
 </div>

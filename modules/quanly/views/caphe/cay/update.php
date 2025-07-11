@@ -11,7 +11,8 @@ use yii\helpers\Html;
         'model' => $model,
         'loaicay' => $loaicay,
         'nhomcay' => $nhomcay,
-        'vuon' => $vuon
+        'vuon' => $vuon,
+        'khuvuc' => $khuvuc,
     ]) ?>
 
 </div>

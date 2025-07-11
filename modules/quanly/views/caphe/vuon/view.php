@@ -101,6 +101,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'maso',
                                     'ngay',
                                     'ten',
+                                    [
+                                        'label' => 'Phân khu',
+                                        'value' => function($model){
+                                            return ($model->khuvuc_id != null) ? $model->khuvuc->ten : '';
+                                        }
+                                    ],
                                     'dientich',
                                     'diachi',
                                     'dacdiem',

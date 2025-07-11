@@ -92,27 +92,61 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? $const['label']['create']
         </div>
 
         <div class="row mt-3">
-            <div class="col-lg-3">
+            <!-- <div class="col-lg-3">
                 <?= $form->field($model, 'maso')->input('text') ?>
-            </div>
-            <div class="col-lg-3">
-                <?= $form->field($model, 'loaicay_id')->widget(Select2::className(), [
-                        'data' => ArrayHelper::map($loaicay, 'id', 'ten'),
-                        'options' => ['prompt' => 'Chọn loại cây'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                ]) ?>
-            </div>
+            </div> -->
+            
             <div class="col-lg-3">
                 <?= $form->field($model, 'nhomcay_id')->widget(Select2::className(), [
-                        'data' => ArrayHelper::map($loaicay, 'id', 'ten'),
-                        'options' => ['prompt' => 'Chọn nhóm cây'],
+                        'data' => ArrayHelper::map($nhomcay, 'id', 'ten'),
+                        'options' => [
+                            'id' => 'nhomcay_id',
+                            'prompt' => 'Chọn nhóm cây'
+                        ],
                         'pluginOptions' => [
                             'allowClear' => true
                         ],
                 ]) ?>
             </div>
+
+            <div class="col-lg-3">
+                <?= $form->field($model, 'loaicay_id')->widget(DepDrop::className(), [
+                        'data' =>  $model->loaicay_id != null ? ArrayHelper::map($loaicay, 'id', 'ten') : [],
+                        'options' => ['id' => 'loaicay_id'],
+                        'pluginOptions' => [
+                            'depends' => ['nhomcay_id'],
+                            'placeholder' => 'Chọn loại cây...',
+                            'url' => Url::to(['/quanly/caphe/cay/loaicay'])
+                        ]
+                ]) ?>
+            </div>
+            
+            <div class="col-lg-3">
+                <?= $form->field($model, 'khuvuc_id')->widget(Select2::className(), [
+                        'data' => ArrayHelper::map($khuvuc, 'id', 'ten'),
+                        'options' => [
+                            'id' => 'khuvuc_id',
+                            'prompt' => 'Chọn phân khu'
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                ]) ?>
+            </div>
+
+            <div class="col-lg-3">
+                <?= $form->field($model, 'vuon_id')->widget(DepDrop::className(), [
+                        'data' =>  $model->vuon_id != null ? ArrayHelper::map($vuon, 'id', 'ten') : [],
+                        'options' => ['id' => 'vuon_id'],
+                        'pluginOptions' => [
+                            'depends' => ['khuvuc_id'],
+                            'placeholder' => 'Chọn luống ....',
+                            'url' => Url::to(['/quanly/caphe/cay/luong'])
+                        ]
+                ]) ?>
+            </div>
+            
+            
             <div class="col-lg-3">
                 <?=
                     $form->field($model, 'ngay')->widget(DatePicker::classname(), [
@@ -130,15 +164,7 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? $const['label']['create']
         </div>
 
         <div class="row mt-3">
-            <div class="col-lg-3">
-                <?= $form->field($model, 'vuon_id')->widget(Select2::className(), [
-                        'data' => ArrayHelper::map($vuon, 'id', 'ten'),
-                        'options' => ['prompt' => 'Chọn vườn'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                ]) ?>
-            </div>
+            
             <div class="col-lg-3">
                 <?= $form->field($model, 'giong')->textInput(['maxlength' => true]) ?>
             </div>

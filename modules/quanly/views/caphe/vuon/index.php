@@ -10,7 +10,7 @@ use app\widgets\export\ExportMenu;
 /* @var $searchModel app\modules\quanly\models\caphe\VuonSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = (isset($const['title'])) ? $const['title'] : 'Vườn';
+$this->title = (isset($const['title'])) ? $const['title'] : 'Luống';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);

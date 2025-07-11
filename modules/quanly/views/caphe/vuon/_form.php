@@ -200,6 +200,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-lg-3">
                     <?= $form->field($model, 'dientich')->textInput(['maxlength' => true]) ?>
                 </div>
+                <div class="col-lg-3">
+                    <?= $form->field($model, 'khuvuc_id')->widget(Select2::className(), [
+                            'data' => ArrayHelper::map($khuvuc, 'id', 'ten'),
+                            'options' => [
+                                'id' => 'khuvuc_id',
+                                'prompt' => 'Chọn phân khu'
+                            ],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                    ]) ?>
+                </div>
             </div>
 
             <div class="row mt-3">

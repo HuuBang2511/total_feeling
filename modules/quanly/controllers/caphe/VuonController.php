@@ -11,20 +11,21 @@ use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use app\modules\quanly\base\QuanlyBaseController;
+use app\modules\quanly\models\caphe\Khuvuc;
 /**
  * VuonController implements the CRUD actions for Vuon model.
  */
 class VuonController extends QuanlyBaseController
 {
 
-    public $title = "Vườn";
+    public $title = "Luống";
 
     public $const;
 
     public function init(){
         parent::init();
             $this->const = [
-            'title' => 'Vườn',
+            'title' => 'Luống',
             'label' => [
                 'index' => 'Danh sách',
                 'create' => 'Thêm mới',
@@ -89,6 +90,8 @@ class VuonController extends QuanlyBaseController
         $request = Yii::$app->request;
         $model = new Vuon();
 
+        $khuvuc = Khuvuc::find()->where(['status' => 1])->all();
+
         $table = '"vuon"';
 
         if ($model->load($request->post())) {
@@ -103,6 +106,7 @@ class VuonController extends QuanlyBaseController
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'khuvuc' => $khuvuc,
             ]);
         }
 
@@ -119,6 +123,7 @@ class VuonController extends QuanlyBaseController
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);
+        $khuvuc = Khuvuc::find()->where(['status' => 1])->all();
 
         $table = '"vuon"';
 
@@ -137,6 +142,7 @@ class VuonController extends QuanlyBaseController
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'khuvuc' => $khuvuc,
             ]);
         }
     }

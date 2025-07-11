@@ -2,7 +2,7 @@
 
 namespace app\modules\quanly\models\caphe;
 use app\modules\quanly\base\QuanlyBaseModel;
-
+use app\modules\quanly\models\caphe\Khuvuc;
 use Yii;
 
 /**
@@ -28,6 +28,10 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  * @property string|null $ghichu
+ * @property int|null $khuvuc_id
+ *
+ * @property Cay[] $cays
+ * @property Khuvuc $khuvuc
  */
 class Vuon extends QuanlyBaseModel
 {
@@ -48,8 +52,9 @@ class Vuon extends QuanlyBaseModel
             [['maso', 'ten', 'dacdiem', 'diachi', 'sonha', 'tenduong', 'thon', 'phuongxa', 'tinhthanh', 'geom', 'geojson', 'ghichu'], 'string'],
             [['ngay', 'created_at', 'updated_at'], 'safe'],
             [['dientich'], 'number'],
-            [['status', 'created_by', 'updated_by'], 'default', 'value' => null],
-            [['status', 'created_by', 'updated_by'], 'integer'],
+            [['status', 'created_by', 'updated_by', 'khuvuc_id'], 'default', 'value' => null],
+            [['status', 'created_by', 'updated_by', 'khuvuc_id'], 'integer'],
+            [['khuvuc_id'], 'exist', 'skipOnError' => true, 'targetClass' => Khuvuc::className(), 'targetAttribute' => ['khuvuc_id' => 'id']],
         ];
     }
 
@@ -62,7 +67,7 @@ class Vuon extends QuanlyBaseModel
             'id' => 'ID',
             'maso' => 'Mã số',
             'ngay' => 'Ngày',
-            'ten' => 'Tên vườn',
+            'ten' => 'Tên luống',
             'dientich' => 'Diện tích',
             'dacdiem' => 'Đặc điểm',
             'diachi' => 'Địa chỉ',
@@ -79,6 +84,27 @@ class Vuon extends QuanlyBaseModel
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
             'ghichu' => 'Ghi chú',
+            'khuvuc_id' => 'Phân khu',
         ];
+    }
+
+    /**
+     * Gets query for [[Cays]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCays()
+    {
+        return $this->hasMany(Cay::className(), ['vuon_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Khuvuc]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getKhuvuc()
+    {
+        return $this->hasOne(Khuvuc::className(), ['id' => 'khuvuc_id']);
     }
 }

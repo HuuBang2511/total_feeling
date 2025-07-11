@@ -63,7 +63,21 @@ return [
         'filter' => ArrayHelper::map($vuon, 'id', 'ten'),
         'filterType' => GridView::FILTER_SELECT2,
         'filterWidgetOptions' => [
-            'options' => ['prompt' => 'Chọn vườn'],
+            'options' => ['prompt' => 'Chọn luống'],
+            'pluginOptions' => [
+                'allowClear' => true,
+            ],
+        ],
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'khuvuc_id',
+        'format' => 'raw',
+        'value' => 'khuvuc.ten',
+        'filter' => ArrayHelper::map($khuvuc, 'id', 'ten'),
+        'filterType' => GridView::FILTER_SELECT2,
+        'filterWidgetOptions' => [
+            'options' => ['prompt' => 'Chọn phân khu'],
             'pluginOptions' => [
                 'allowClear' => true,
             ],

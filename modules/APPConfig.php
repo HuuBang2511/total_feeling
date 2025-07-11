@@ -120,7 +120,7 @@ class APPConfig
                 'hasChild' => false,
             ],
             [
-                'name' => 'Vườn',
+                'name' => 'Luống',
                 'icon' => 'fa fa-list',
                 'url' => 'quanly/caphe/vuon',
                 'key'=>'quanly.caphe/vuon.index',
