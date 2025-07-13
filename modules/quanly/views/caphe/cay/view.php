@@ -76,17 +76,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'maso',
                                     'ngay',
                                     [
-                                        'label' => 'Loại cây',
-                                        'value' => function($model){
-                                            return ($model->loaicay_id != null) ? $model->loaicay->ten : '';
-                                        }
-                                    ],
-                                    [
                                         'label' => 'Nhóm cây',
                                         'value' => function($model){
                                             return ($model->nhomcay_id != null) ? $model->nhomcay->ten : '';
                                         }
                                     ],
+                                    [
+                                        'label' => 'Loại cây',
+                                        'value' => function($model){
+                                            return ($model->loaicay_id != null) ? $model->loaicay->ten : '';
+                                        }
+                                    ],
+                                    
                                     [
                                         'label' => 'Giống cây',
                                         'value' => function($model){
@@ -102,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     [
                                         'label' => 'Luống',
                                         'value' => function($model){
-                                            return ($model->vuon_id != null) ? $model->vuon->ten : '';
+                                            return ($model->vuon_id != null) ? $model->vuon->maso : '';
                                         }
                                     ],
                                     'giong',

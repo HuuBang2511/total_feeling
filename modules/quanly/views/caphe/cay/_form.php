@@ -148,7 +148,7 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? $const['label']['create']
 
             <div class="col-lg-4">
                 <?= $form->field($model, 'vuon_id')->widget(DepDrop::className(), [
-                        'data' =>  $model->vuon_id != null ? ArrayHelper::map($vuon, 'id', 'ten') : [],
+                        'data' =>  $model->vuon_id != null ? ArrayHelper::map($vuon, 'id', 'maso') : [],
                         'options' => ['id' => 'vuon_id'],
                         'pluginOptions' => [
                             'depends' => ['khuvuc_id'],

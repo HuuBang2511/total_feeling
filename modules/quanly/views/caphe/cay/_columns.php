@@ -57,6 +57,20 @@ return [
     ],
     [
         'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'giongcay_id',
+        'format' => 'raw',
+        'value' => 'giongcay.ten',
+        'filter' => ArrayHelper::map($giongcay, 'id', 'ten'),
+        'filterType' => GridView::FILTER_SELECT2,
+        'filterWidgetOptions' => [
+            'options' => ['prompt' => 'Chọn giống cây'],
+            'pluginOptions' => [
+                'allowClear' => true,
+            ],
+        ],
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
         'attribute' => 'vuon_id',
         'format' => 'raw',
         'value' => 'vuon.ten',

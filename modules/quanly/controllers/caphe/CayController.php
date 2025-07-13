@@ -87,9 +87,9 @@ class CayController extends QuanlyBaseController
             $parents = $_POST['depdrop_parents'];
             if ($parents != null) {
                 $khuvuc_id = $parents[0];
-                $out = Vuon::find()->select('id, ten as name')->andWhere(['status' => 1])
+                $out = Vuon::find()->select('id, maso as name')->andWhere(['status' => 1])
                     ->where(['khuvuc_id' => $khuvuc_id])
-                    ->orderBy('ten')->asArray()->all();
+                    ->orderBy('maso')->asArray()->all();
                 return ['output'=>$out, 'selected'=>''];
             }
         }
@@ -160,7 +160,7 @@ class CayController extends QuanlyBaseController
         if ($model->load($request->post()) && $model->save()) {
 
             if($model->khuvuc_id != null && $model->vuon_id != null){
-                $model->maso = $model->khuvuc->ten.'.'.$model->vuon->ten.'.'.$model->id;
+                $model->maso = $model->khuvuc->ten.'.'.$model->vuon->maso.'.'.$model->id;
                 $model->save();
             }
 
@@ -213,7 +213,7 @@ class CayController extends QuanlyBaseController
         if ($model->load($request->post())) {
 
             if($model->khuvuc_id != null && $model->vuon_id != null){
-                $model->maso = $model->khuvuc->ten.'.'.$model->vuon->ten.'.'.$model->id;
+                $model->maso = $model->khuvuc->ten.'.'.$model->vuon->maso.'.'.$model->id;
             }
 
             $model->save();
