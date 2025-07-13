@@ -71,20 +71,6 @@ return [
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'attribute' => 'vuon_id',
-        'format' => 'raw',
-        'value' => 'vuon.ten',
-        'filter' => ArrayHelper::map($vuon, 'id', 'ten'),
-        'filterType' => GridView::FILTER_SELECT2,
-        'filterWidgetOptions' => [
-            'options' => ['prompt' => 'Chọn luống'],
-            'pluginOptions' => [
-                'allowClear' => true,
-            ],
-        ],
-    ],
-    [
-        'class' => '\kartik\grid\DataColumn',
         'attribute' => 'khuvuc_id',
         'format' => 'raw',
         'value' => 'khuvuc.ten',
@@ -97,6 +83,21 @@ return [
             ],
         ],
     ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'vuon_id',
+        'format' => 'raw',
+        'value' => 'vuon.maso',
+        'filter' => ArrayHelper::map($vuon, 'id', 'maso'),
+        'filterType' => GridView::FILTER_SELECT2,
+        'filterWidgetOptions' => [
+            'options' => ['prompt' => 'Chọn luống'],
+            'pluginOptions' => [
+                'allowClear' => true,
+            ],
+        ],
+    ],
+    
     // [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'loaicay_id',
