@@ -41,7 +41,7 @@ class RuongbacthangSearch extends Ruongbacthang
      */
     public function search($params)
     {
-        $query = Ruongbacthang::find();
+        $query = Ruongbacthang::find()->where(['status' => 1]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

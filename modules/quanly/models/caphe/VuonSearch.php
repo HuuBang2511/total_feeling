@@ -42,7 +42,7 @@ class VuonSearch extends Vuon
      */
     public function search($params)
     {
-        $query = Vuon::find();
+        $query = Vuon::find()->where(['status' => 1]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

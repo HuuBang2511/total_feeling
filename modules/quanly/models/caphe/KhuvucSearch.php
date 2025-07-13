@@ -41,7 +41,7 @@ class KhuvucSearch extends Khuvuc
      */
     public function search($params)
     {
-        $query = Khuvuc::find();
+        $query = Khuvuc::find()->where(['status' => 1]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
