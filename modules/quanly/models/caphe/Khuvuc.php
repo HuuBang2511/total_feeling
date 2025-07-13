@@ -54,7 +54,7 @@ class Khuvuc extends QuanlyBaseModel
             'id' => 'ID',
             'maso' => 'Mã số',
             'ngay' => 'Ngày',
-            'ten' => 'Tên khu vực',
+            'ten' => 'Tên phân khú',
             'dacdiem' => 'Đặc điểm',
             'ghichu' => 'Ghi chú',
             'geom' => 'Geom',

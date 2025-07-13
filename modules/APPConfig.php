@@ -127,7 +127,7 @@ class APPConfig
                 'hasChild' => false,
             ],
             [
-                'name' => 'Khu vực',
+                'name' => 'Phân khu',
                 'icon' => 'fa fa-list',
                 'url' => 'quanly/caphe/khuvuc',
                 'key'=>'quanly.caphe/khuvuc.index',
