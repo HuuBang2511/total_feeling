@@ -174,9 +174,9 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             
              <div class="row mt-3">
-                <div class="col-lg-3">
+                <!-- <div class="col-lg-3">
                     <?= $form->field($model, 'maso')->input('text') ?>
-                </div>
+                </div> -->
                 
                 <div class="col-lg-3">
                     <?=

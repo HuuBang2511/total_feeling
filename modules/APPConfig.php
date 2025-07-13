@@ -316,6 +316,27 @@ class APPConfig
             ]
         ],
         'danhmuc' => [
+            [
+                'name' => 'Danh mục nhóm cây',
+                'icon' => 'fa fa-list',
+                'url' => 'quanly/caphe/danhmuc/dm-nhomcay',
+                'key'=>'quanly.map.caphe.danhmuc/dm-nhomcay',
+                'hasChild' => false,
+            ],
+            [
+                'name' => 'Danh mục loại cây',
+                'icon' => 'fa fa-list',
+                'url' => 'quanly/caphe/danhmuc/dm-loaicay',
+                'key'=>'quanly.map.caphe.danhmuc/dm-loaicay',
+                'hasChild' => false,
+            ],
+            [
+                'name' => 'Danh mục giống cây',
+                'icon' => 'fa fa-list',
+                'url' => 'quanly/caphe/danhmuc/dm-giongcay',
+                'key'=>'quanly.map.caphe.danhmuc/dm-giongcay',
+                'hasChild' => false,
+            ],
             //  [
             //      'name' => 'Danh mục Sự cố biện pháp xử lý',
             //      'icon' => 'fa fa-list',

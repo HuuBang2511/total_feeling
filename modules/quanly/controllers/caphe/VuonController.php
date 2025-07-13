@@ -97,6 +97,11 @@ class VuonController extends QuanlyBaseController
         if ($model->load($request->post())) {
             $model->save();
 
+            if($model->khuvuc_id != null){
+                $model->maso = $model->khuvuc->ten.$model->id;
+                $model->save();
+            }
+
             Yii::$app->db
             ->createCommand("UPDATE ".$table." SET geom = ST_SETSRID(ST_GeomFromText(ST_AsText(ST_GeomFromGeoJSON('" . $model->geojson . "'))),4326) WHERE id = :id")
             ->bindValue(':id', $model->id)
@@ -130,6 +135,11 @@ class VuonController extends QuanlyBaseController
         //$oldGeomGeojson = $model->geojson;
 
         if ($model->load($request->post())) {
+
+            if($model->khuvuc_id != null){
+                $model->maso = $model->khuvuc->ten.$model->id;
+                
+            }
 
             Yii::$app->db
                 ->createCommand("UPDATE ".$table." SET geom = ST_SETSRID(ST_GeomFromText(ST_AsText(ST_GeomFromGeoJSON('" . $model->geojson . "'))),4326) WHERE id = :id")

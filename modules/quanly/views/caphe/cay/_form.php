@@ -96,7 +96,7 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? $const['label']['create']
                 <?= $form->field($model, 'maso')->input('text') ?>
             </div> -->
             
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <?= $form->field($model, 'nhomcay_id')->widget(Select2::className(), [
                         'data' => ArrayHelper::map($nhomcay, 'id', 'ten'),
                         'options' => [
@@ -109,7 +109,7 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? $const['label']['create']
                 ]) ?>
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <?= $form->field($model, 'loaicay_id')->widget(DepDrop::className(), [
                         'data' =>  $model->loaicay_id != null ? ArrayHelper::map($loaicay, 'id', 'ten') : [],
                         'options' => ['id' => 'loaicay_id'],
@@ -120,8 +120,20 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? $const['label']['create']
                         ]
                 ]) ?>
             </div>
+
+            <div class="col-lg-4">
+                <?= $form->field($model, 'giongcay_id')->widget(DepDrop::className(), [
+                        'data' =>  $model->giongcay_id != null ? ArrayHelper::map($giongcay, 'id', 'ten') : [],
+                        'options' => ['id' => 'giongcay_id'],
+                        'pluginOptions' => [
+                            'depends' => ['loaicay_id'],
+                            'placeholder' => 'Chọn giống cây...',
+                            'url' => Url::to(['/quanly/caphe/cay/giongcay'])
+                        ]
+                ]) ?>
+            </div>
             
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <?= $form->field($model, 'khuvuc_id')->widget(Select2::className(), [
                         'data' => ArrayHelper::map($khuvuc, 'id', 'ten'),
                         'options' => [
@@ -134,7 +146,7 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? $const['label']['create']
                 ]) ?>
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <?= $form->field($model, 'vuon_id')->widget(DepDrop::className(), [
                         'data' =>  $model->vuon_id != null ? ArrayHelper::map($vuon, 'id', 'ten') : [],
                         'options' => ['id' => 'vuon_id'],
@@ -147,7 +159,7 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? $const['label']['create']
             </div>
             
             
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <?=
                     $form->field($model, 'ngay')->widget(DatePicker::classname(), [
                         'options' => [
@@ -165,10 +177,10 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? $const['label']['create']
 
         <div class="row mt-3">
             
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <?= $form->field($model, 'giong')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-8">
                 <?= $form->field($model, 'loaire')->textInput(['maxlength' => true]) ?>
             </div>
         </div>

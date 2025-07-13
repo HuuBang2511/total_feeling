@@ -13,6 +13,7 @@ use yii\helpers\Html;
 use app\modules\quanly\base\QuanlyBaseController;
 use app\modules\quanly\models\caphe\danhmuc\DmLoaicay;
 use app\modules\quanly\models\caphe\danhmuc\DmNhomcay;
+use app\modules\quanly\models\caphe\danhmuc\DmGiongcay;
 use app\modules\quanly\models\caphe\Vuon;
 use app\modules\quanly\models\caphe\Khuvuc;
 
@@ -55,7 +56,23 @@ class CayController extends QuanlyBaseController
             if ($parents != null) {
                 $nhomcay_id = $parents[0];
                 $out = DmLoaicay::find()->select('id, ten as name')
-                    ->where(['nhomcay_id' => $nhomcay_id])
+                    ->where(['nhomcay_id' => $nhomcay_id])->andWhere(['status' => 1])
+                    ->orderBy('ten')->asArray()->all();
+                return ['output'=>$out, 'selected'=>''];
+            }
+        }
+        return ['output'=>'', 'selected'=>''];
+    }
+
+    public function actionGiongcay() {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $loaicay_id = $parents[0];
+                $out = DmGiongcay::find()->select('id, ten as name')
+                    ->where(['loaicay_id' => $loaicay_id])->andWhere(['status' => 1])
                     ->orderBy('ten')->asArray()->all();
                 return ['output'=>$out, 'selected'=>''];
             }
@@ -70,7 +87,7 @@ class CayController extends QuanlyBaseController
             $parents = $_POST['depdrop_parents'];
             if ($parents != null) {
                 $khuvuc_id = $parents[0];
-                $out = Vuon::find()->select('id, ten as name')
+                $out = Vuon::find()->select('id, ten as name')->andWhere(['status' => 1])
                     ->where(['khuvuc_id' => $khuvuc_id])
                     ->orderBy('ten')->asArray()->all();
                 return ['output'=>$out, 'selected'=>''];
@@ -90,6 +107,7 @@ class CayController extends QuanlyBaseController
 
         $loaicay = DmLoaicay::find()->where(['status' => 1])->all();
         $nhomcay = DmNhomcay::find()->where(['status' => 1])->all();
+        $giongcay = DmGiongcay::find()->where(['status' => 1])->all();
         $vuon = Vuon::find()->where(['status' => 1])->all();
         $khuvuc = Khuvuc::find()->where(['status' => 1])->all();
 
@@ -100,6 +118,7 @@ class CayController extends QuanlyBaseController
             'nhomcay' => $nhomcay,
             'vuon' => $vuon,
             'khuvuc' => $khuvuc,
+            'giongcay' => $giongcay,
         ]);
     }
 
@@ -132,6 +151,7 @@ class CayController extends QuanlyBaseController
 
         $loaicay = DmLoaicay::find()->where(['status' => 1])->all();
         $nhomcay = DmNhomcay::find()->where(['status' => 1])->all();
+        $giongcay = DmGiongcay::find()->where(['status' => 1])->all();
         $vuon = Vuon::find()->where(['status' => 1])->all();
         $khuvuc = Khuvuc::find()->where(['status' => 1])->all();
 
@@ -161,6 +181,7 @@ class CayController extends QuanlyBaseController
                 'nhomcay' => $nhomcay,
                 'vuon' => $vuon,
                 'khuvuc' => $khuvuc,
+                'giongcay' => $giongcay,
             ]);
         }
 
@@ -180,6 +201,7 @@ class CayController extends QuanlyBaseController
 
         $loaicay = DmLoaicay::find()->where(['status' => 1])->all();
         $nhomcay = DmNhomcay::find()->where(['status' => 1])->all();
+        $giongcay = DmGiongcay::find()->where(['status' => 1])->all();
         $vuon = Vuon::find()->where(['status' => 1])->all();
         $khuvuc = Khuvuc::find()->where(['status' => 1])->all();
 
@@ -212,6 +234,7 @@ class CayController extends QuanlyBaseController
                 'nhomcay' => $nhomcay,
                 'vuon' => $vuon,
                 'khuvuc' => $khuvuc,
+                'giongcay' => $giongcay,
             ]);
         }
     }

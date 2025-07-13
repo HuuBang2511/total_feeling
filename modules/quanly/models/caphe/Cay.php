@@ -4,6 +4,7 @@ namespace app\modules\quanly\models\caphe;
 use app\modules\quanly\base\QuanlyBaseModel;
 use app\modules\quanly\models\caphe\danhmuc\DmLoaicay;
 use app\modules\quanly\models\caphe\danhmuc\DmNhomcay;
+use app\modules\quanly\models\caphe\danhmuc\DmGiongcay;
 use app\modules\quanly\models\caphe\Vuon;
 use app\modules\quanly\models\caphe\Khuvuc;
 use Yii;
@@ -37,7 +38,9 @@ use Yii;
  * @property int|null $updated_by
  * @property int|null $vuon_id
  * @property int|null $khuvuc_id
+ * @property int|null $giongcay_id
  *
+ * @property DmGiongcay $giongcay
  * @property DmLoaicay $loaicay
  * @property DmNhomcay $nhomcay
  * @property Khuvuc $khuvuc
@@ -61,14 +64,15 @@ class Cay extends QuanlyBaseModel
         return [
             [['maso', 'giong', 'loaire', 'khanang_giudat', 'ghichu_sinhkhoi', 'dacdiem', 'nguongoc', 'ghichu', 'geom', 'geojson', 'lat', 'long'], 'string'],
             [['ngay', 'created_at', 'updated_at'], 'safe'],
-            [['nhomcay_id', 'loaicay_id', 'status', 'created_by', 'updated_by', 'vuon_id', 'khuvuc_id'], 'default', 'value' => null],
-            [['nhomcay_id', 'loaicay_id', 'status', 'created_by', 'updated_by', 'vuon_id', 'khuvuc_id'], 'integer'],
+            [['nhomcay_id', 'loaicay_id', 'status', 'created_by', 'updated_by', 'vuon_id', 'khuvuc_id', 'giongcay_id'], 'default', 'value' => null],
+            [['nhomcay_id', 'loaicay_id', 'status', 'created_by', 'updated_by', 'vuon_id', 'khuvuc_id', 'giongcay_id'], 'integer'],
             [['chieucao', 'duongkinhthan', 'duongkinhtan'], 'number'],
+            [['giongcay_id'], 'exist', 'skipOnError' => true, 'targetClass' => DmGiongcay::className(), 'targetAttribute' => ['giongcay_id' => 'id']],
             [['loaicay_id'], 'exist', 'skipOnError' => true, 'targetClass' => DmLoaicay::className(), 'targetAttribute' => ['loaicay_id' => 'id']],
             [['nhomcay_id'], 'exist', 'skipOnError' => true, 'targetClass' => DmNhomcay::className(), 'targetAttribute' => ['nhomcay_id' => 'id']],
             [['khuvuc_id'], 'exist', 'skipOnError' => true, 'targetClass' => Khuvuc::className(), 'targetAttribute' => ['khuvuc_id' => 'id']],
             [['vuon_id'], 'exist', 'skipOnError' => true, 'targetClass' => Vuon::className(), 'targetAttribute' => ['vuon_id' => 'id']],
-            [['lat', 'long'], 'required']
+            [['lat', 'long'], 'required'],
         ];
     }
 
@@ -104,7 +108,18 @@ class Cay extends QuanlyBaseModel
             'updated_by' => 'Updated By',
             'vuon_id' => 'Luống',
             'khuvuc_id' => 'Phân khu',
+            'giongcay_id' => 'Giống cây',
         ];
+    }
+
+    /**
+     * Gets query for [[Giongcay]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGiongcay()
+    {
+        return $this->hasOne(DmGiongcay::className(), ['id' => 'giongcay_id']);
     }
 
     /**

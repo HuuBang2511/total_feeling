@@ -88,6 +88,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                         }
                                     ],
                                     [
+                                        'label' => 'Giống cây',
+                                        'value' => function($model){
+                                            return ($model->giongcay_id != null) ? $model->giongcay->ten : '';
+                                        }
+                                    ],
+                                    [
                                         'label' => 'Phân khu',
                                         'value' => function($model){
                                             return ($model->khuvuc_id != null) ? $model->khuvuc->ten : '';

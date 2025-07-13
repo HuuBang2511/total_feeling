@@ -18,7 +18,7 @@ class CaySearch extends Cay
     public function rules()
     {
         return [
-            [['id', 'nhomcay_id', 'loaicay_id', 'status', 'created_by', 'updated_by', 'vuon_id', 'khuvuc_id'], 'integer'],
+            [['id', 'nhomcay_id', 'loaicay_id', 'status', 'created_by', 'updated_by', 'vuon_id', 'khuvuc_id', 'giongcay_id'], 'integer'],
             [['maso', 'ngay', 'giong', 'loaire', 'khanang_giudat', 'ghichu_sinhkhoi', 'dacdiem', 'nguongoc', 'ghichu', 'geom', 'geojson', 'lat', 'long', 'created_at', 'updated_at'], 'safe'],
             [['chieucao', 'duongkinhthan', 'duongkinhtan'], 'number'],
         ];
@@ -71,6 +71,7 @@ class CaySearch extends Cay
             'updated_by' => $this->updated_by,
             'vuon_id' => $this->vuon_id,
             'khuvuc_id' => $this->khuvuc_id,
+            'giongcay_id' => $this->giongcay_id,
         ]);
 
         $query->andFilterWhere(['like', 'upper(maso)', mb_strtoupper($this->maso)])

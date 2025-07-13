@@ -14,5 +14,6 @@ use yii\helpers\Html;
         'nhomcay' => $nhomcay,
         'vuon' => $vuon,
         'khuvuc' => $khuvuc,
+        'giongcay' => $giongcay,
     ]) ?>
 </div>

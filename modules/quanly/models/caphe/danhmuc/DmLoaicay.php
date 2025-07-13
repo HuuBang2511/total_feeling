@@ -53,7 +53,7 @@ class DmLoaicay extends QuanlyBaseModel
     {
         return [
             'id' => 'ID',
-            'ten' => 'tên',
+            'ten' => 'Tên',
             'layer_geoserver' => 'Layer Geoserver',
             'layer_name' => 'Layer Name',
             'status' => 'Status',
