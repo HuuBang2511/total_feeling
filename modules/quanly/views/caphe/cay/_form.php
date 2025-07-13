@@ -177,10 +177,8 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? $const['label']['create']
 
         <div class="row mt-3">
             
-            <div class="col-lg-4">
-                <?= $form->field($model, 'giong')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col-lg-8">
+            
+            <div class="col-lg-12">
                 <?= $form->field($model, 'loaire')->textInput(['maxlength' => true]) ?>
             </div>
         </div>
