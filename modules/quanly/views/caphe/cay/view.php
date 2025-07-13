@@ -106,7 +106,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             return ($model->vuon_id != null) ? $model->vuon->maso : '';
                                         }
                                     ],
-                                    'giong',
+                                    //'giong',
                                     'dacdiem',
                                     'nguongoc',
                                     'ghichu',
