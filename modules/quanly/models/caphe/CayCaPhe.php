@@ -40,6 +40,7 @@ class CayCaPhe extends QuanlyBaseModel
             [['status', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['layer'], 'string', 'max' => 254],
+            [['lat', 'long'], 'required']
         ];
     }
 

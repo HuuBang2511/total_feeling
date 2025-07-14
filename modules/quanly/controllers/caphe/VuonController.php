@@ -102,10 +102,12 @@ class VuonController extends QuanlyBaseController
                 $model->save();
             }
 
-            Yii::$app->db
-            ->createCommand("UPDATE ".$table." SET geom = ST_SETSRID(ST_GeomFromText(ST_AsText(ST_GeomFromGeoJSON('" . $model->geojson . "'))),4326) WHERE id = :id")
-            ->bindValue(':id', $model->id)
-            ->execute();
+            if($model->geojson != null){
+                Yii::$app->db
+                ->createCommand("UPDATE ".$table." SET geom = ST_SETSRID(ST_GeomFromText(ST_AsText(ST_GeomFromGeoJSON('" . $model->geojson . "'))),4326) WHERE id = :id")
+                ->bindValue(':id', $model->id)
+                ->execute();
+            }
 
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -141,10 +143,12 @@ class VuonController extends QuanlyBaseController
                 
             }
 
-            Yii::$app->db
+            if($model->geojson != null){
+                Yii::$app->db
                 ->createCommand("UPDATE ".$table." SET geom = ST_SETSRID(ST_GeomFromText(ST_AsText(ST_GeomFromGeoJSON('" . $model->geojson . "'))),4326) WHERE id = :id")
                 ->bindValue(':id', $model->id)
                 ->execute();
+            }
 
             $model->save();
 

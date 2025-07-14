@@ -46,6 +46,7 @@ class CayCaPheDaTrong extends QuanlyBaseModel
             [['status', 'created_by', 'updated_by', 'loaicaphe_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['loaicaphe_id'], 'exist', 'skipOnError' => true, 'targetClass' => DmLoaicaphe::className(), 'targetAttribute' => ['loaicaphe_id' => 'id']],
+            [['lat', 'long'], 'required']
         ];
     }
 

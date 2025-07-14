@@ -40,6 +40,7 @@ class CayChuoiDaTrong extends QuanlyBaseModel
             [['status', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['status', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
+            [['lat', 'long'], 'required']
         ];
     }
 
