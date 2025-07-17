@@ -47,7 +47,7 @@ use Yii;
  * @property Khuvuc $khuvuc
  * @property Vuon $vuon
  */
-class Cay extends \yii\db\ActiveRecord
+class Cay extends QuanlyBaseModel
 {
     /**
      * {@inheritdoc}
