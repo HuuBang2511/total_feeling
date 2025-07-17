@@ -133,7 +133,7 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? $const['label']['create']
                 ]) ?>
             </div>
             
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <?= $form->field($model, 'khuvuc_id')->widget(Select2::className(), [
                         'data' => ArrayHelper::map($khuvuc, 'id', 'ten'),
                         'options' => [
@@ -146,7 +146,7 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? $const['label']['create']
                 ]) ?>
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <?= $form->field($model, 'vuon_id')->widget(DepDrop::className(), [
                         'data' =>  $model->vuon_id != null ? ArrayHelper::map($vuon, 'id', 'maso') : [],
                         'options' => ['id' => 'vuon_id'],
@@ -158,8 +158,20 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? $const['label']['create']
                 ]) ?>
             </div>
             
-            
-            <div class="col-lg-4">
+            <div class="col-lg-3">
+                <?= $form->field($model, 'loaitrong')->widget(Select2::className(), [
+                        'data' => [1 => 'Trồng mới', 2 => 'Trồng thay thế'],
+                        'options' => [
+                            'id' => 'loaitrong',
+                            'prompt' => 'Chọn loại trồng'
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                ]) ?>
+            </div>
+
+            <div class="col-lg-3">
                 <?=
                     $form->field($model, 'ngay')->widget(DatePicker::classname(), [
                         'options' => [

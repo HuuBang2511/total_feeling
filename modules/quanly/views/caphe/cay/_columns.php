@@ -26,7 +26,22 @@ return [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'nhomcay_id',
     // ],
-    
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'loaitrong',
+        'format' => 'raw',
+        'value' => function($model){
+            return ($model->loaitrong != null) ? (($model->loaitrong == 1) ? 'Trồng mới' : 'Trồng thay thế' ) : '';
+        },
+        'filter' => [1 => 'Trồng mới', 2 => 'Trồng thay thế'],
+        'filterType' => GridView::FILTER_SELECT2,
+        'filterWidgetOptions' => [
+            'options' => ['prompt' => 'Chọn loại trồng'],
+            'pluginOptions' => [
+                'allowClear' => true,
+            ],
+        ],
+    ],
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'nhomcay_id',

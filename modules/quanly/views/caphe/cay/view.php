@@ -76,6 +76,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'maso',
                                     'ngay',
                                     [
+                                        'label' => 'Loại trồng',
+                                        'value' => function($model){
+                                            return ($model->loaitrong != null) ? (($model->loaitrong == 1) ? 'Trồng mới' : 'Trồng thay thế' ) : '';
+                                        }
+                                    ],
+                                    [
                                         'label' => 'Nhóm cây',
                                         'value' => function($model){
                                             return ($model->nhomcay_id != null) ? $model->nhomcay->ten : '';

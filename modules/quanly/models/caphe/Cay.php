@@ -39,6 +39,7 @@ use Yii;
  * @property int|null $vuon_id
  * @property int|null $khuvuc_id
  * @property int|null $giongcay_id
+ * @property int|null $loaitrong
  *
  * @property DmGiongcay $giongcay
  * @property DmLoaicay $loaicay
@@ -46,7 +47,7 @@ use Yii;
  * @property Khuvuc $khuvuc
  * @property Vuon $vuon
  */
-class Cay extends QuanlyBaseModel
+class Cay extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -64,8 +65,8 @@ class Cay extends QuanlyBaseModel
         return [
             [['maso', 'giong', 'loaire', 'khanang_giudat', 'ghichu_sinhkhoi', 'dacdiem', 'nguongoc', 'ghichu', 'geom', 'geojson', 'lat', 'long'], 'string'],
             [['ngay', 'created_at', 'updated_at'], 'safe'],
-            [['nhomcay_id', 'loaicay_id', 'status', 'created_by', 'updated_by', 'vuon_id', 'khuvuc_id', 'giongcay_id'], 'default', 'value' => null],
-            [['nhomcay_id', 'loaicay_id', 'status', 'created_by', 'updated_by', 'vuon_id', 'khuvuc_id', 'giongcay_id'], 'integer'],
+            [['nhomcay_id', 'loaicay_id', 'status', 'created_by', 'updated_by', 'vuon_id', 'khuvuc_id', 'giongcay_id', 'loaitrong'], 'default', 'value' => null],
+            [['nhomcay_id', 'loaicay_id', 'status', 'created_by', 'updated_by', 'vuon_id', 'khuvuc_id', 'giongcay_id', 'loaitrong'], 'integer'],
             [['chieucao', 'duongkinhthan', 'duongkinhtan'], 'number'],
             [['giongcay_id'], 'exist', 'skipOnError' => true, 'targetClass' => DmGiongcay::className(), 'targetAttribute' => ['giongcay_id' => 'id']],
             [['loaicay_id'], 'exist', 'skipOnError' => true, 'targetClass' => DmLoaicay::className(), 'targetAttribute' => ['loaicay_id' => 'id']],
@@ -109,6 +110,7 @@ class Cay extends QuanlyBaseModel
             'vuon_id' => 'Luống',
             'khuvuc_id' => 'Phân khu',
             'giongcay_id' => 'Giống cây',
+            'loaitrong' => 'Loại trồng',
         ];
     }
 
